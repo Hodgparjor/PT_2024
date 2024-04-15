@@ -6,11 +6,19 @@ using System.Threading.Tasks;
 
 namespace Data
 {
-    internal class Product
+    public class Product
     {
 		private int id;
 		private string name;
 		private decimal price;
+		private string? description;
+
+		public string? Description
+		{
+			get { return description; }
+			set { description = value; }
+		}
+
 
 		public decimal Price
 		{
@@ -32,11 +40,12 @@ namespace Data
 			set { id = value; }
 		}
 
-		public Product(int id, string name, decimal price) 
+		public Product(int id, string name, decimal price, string? description) 
 		{ 
 			Id = id;
-			Name = name ?? "";
+			Name = name;
 			Price = price;
+			Description = description;
 		}
 
 	}

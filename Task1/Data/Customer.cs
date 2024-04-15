@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace Data
 {
-    internal class Customer
+    public class Customer
     {
 		private int id;
 		private string name;
+		private List<WarehouseEntry> boughtProducts;
 
 		public string Name
 		{
@@ -23,10 +24,17 @@ namespace Data
 			set { id = value; }
 		}
 
+		public List<WarehouseEntry> BoughtProducts
+		{
+			get { return boughtProducts; }
+			set { boughtProducts = value; }
+		}
+
 		internal Customer(int id, string name)
 		{
 			Id = id;
 			Name = name;
+			boughtProducts = new List<WarehouseEntry>();
 		}
 
 	}

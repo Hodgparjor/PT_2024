@@ -6,13 +6,22 @@ using System.Threading.Tasks;
 
 namespace Data
 {
-    internal class EventSold : Event
+    public class EventSold : Event
     {
-        private Customer customer;
-        private List<WarehouseEntry> warehouseEntries;
+        private Customer _customer;
+        private Product _soldProduct;
+        private int _quantity;
 
-        internal Customer Customer { get => customer; set => customer = value; }
-        internal List<WarehouseEntry> WarehouseEntries { get => warehouseEntries; set => warehouseEntries = value; }
+        public EventSold(Customer customer, Product product, int quantity)
+        {
+            Date = DateTime.Now;
+            _customer = customer;
+            _soldProduct = product;
+            _quantity = quantity;
+        }
 
+        public int Quantity { get => _quantity; set => _quantity = value; }
+        internal Customer Customer { get => _customer; set => _customer = value; }
+        internal Product SoldProduct { get => _soldProduct; set => _soldProduct = value; }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Data
 {
-    internal class WarehouseEntry
+    public class WarehouseEntry
     {
         private Product product;
         private int quantity;

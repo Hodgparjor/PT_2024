@@ -6,8 +6,19 @@ using System.Threading.Tasks;
 
 namespace Data
 {
-    internal class EventDelivery : Event
+    public class EventDelivery : Event
     {
-        private List<WarehouseEntry> entries;
+        private Product _deliveredProduct;
+        private int _quantity;
+
+        public EventDelivery(Product deliveredProduct, int quantity)
+        {
+            _deliveredProduct = deliveredProduct;
+            Date = DateTime.Now;
+            _quantity = quantity;
+        }
+
+        internal Product DeliveredProduct { get => _deliveredProduct; set => _deliveredProduct = value; }
+        public int Quantity { get => _quantity; set => _quantity = value; }
     }
 }

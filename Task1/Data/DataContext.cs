@@ -6,19 +6,19 @@ using System.Threading.Tasks;
 
 namespace Data
 {
-    internal class DataContext
+    public class DataContext
     {
         internal List<Customer> customers;
         internal List<Event> events;
-        internal Dictionary<int, Product> catalog;
-        internal Dictionary<int, WarehouseEntry> warehouseState;
+        internal List<Product> catalog;
+        internal List<WarehouseEntry> warehouseState;
 
         internal DataContext()
         {
             customers = new List<Customer>();
             events = new List<Event>();
-            catalog = new Dictionary<int, Product>();
-            warehouseState = new Dictionary<int, WarehouseEntry>();
+            catalog = new List<Product>();
+            warehouseState = new List<WarehouseEntry>();
         }
     }
 }
