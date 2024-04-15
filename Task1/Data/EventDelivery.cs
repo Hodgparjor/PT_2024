@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Data
 {
-    internal class Event
+    internal class EventDelivery : Event
     {
+        private List<WarehouseEntry> entries;
     }
 }

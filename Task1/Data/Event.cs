@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Data
 {
-    internal class EventDelivery
+    internal class Event
     {
+        private DateTime date;
+
+        public DateTime Date { get => date; set => date = value; }
     }
 }

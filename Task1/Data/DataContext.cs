@@ -12,5 +12,13 @@ namespace Data
         internal List<Event> events;
         internal Dictionary<int, Product> catalog;
         internal Dictionary<int, WarehouseEntry> warehouseState;
+
+        internal DataContext()
+        {
+            customers = new List<Customer>();
+            events = new List<Event>();
+            catalog = new Dictionary<int, Product>();
+            warehouseState = new Dictionary<int, WarehouseEntry>();
+        }
     }
 }
