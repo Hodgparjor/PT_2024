@@ -18,6 +18,7 @@ namespace Data
             _customer = customer;
             _soldProduct = product;
             _quantity = quantity;
+            _customer.BoughtProducts.Add(new WarehouseEntry(product, quantity));
         }
 
         public int Quantity { get => _quantity; set => _quantity = value; }

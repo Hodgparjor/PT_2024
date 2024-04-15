@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Data
 {
-    internal class Event
+    public class Event
     {
         private DateTime date;
 

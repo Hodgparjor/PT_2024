@@ -2,14 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Data
 {
     public abstract class DataLayerAbstract
     {
+        public static DataLayerAbstract CreateMyDataLayer()
+        {
+            return new MyDataLayer();
+        }
+
         #region Customer
         public abstract void AddCustomer(Customer customer);
+        public abstract bool DoesCustomerExist(int id);
         public abstract Customer GetCustomer(int id);
         public abstract bool RemoveCustomer(int id);
         public abstract List<Customer> GetAllCustomers();
@@ -17,6 +22,7 @@ namespace Data
 
         #region State
         public abstract void AddWarehouseEntry(WarehouseEntry entry);
+        public abstract bool DoesWarehouseEntryExist(int id);
         public abstract WarehouseEntry GetWarehouseEntry(int id);
         public abstract List<WarehouseEntry> GetAllWarehouseEntries();
         public abstract bool RemoveWarehouseEntry(int id);
@@ -24,6 +30,7 @@ namespace Data
 
         #region Catalog
         public abstract void AddCatalogItem(Product product);
+        public abstract bool DoesCatalogItemExist(int id);
         public abstract bool RemoveCatalogItem(int id);
         public abstract Product GetCatalogItem(int id);
         public abstract List<Product> GetAllCatalogItems();
@@ -41,7 +48,6 @@ namespace Data
             public MyDataLayer()
             {
                 dataContext = new DataContext();
-                throw new NotImplementedException();
             }
 
             public override void AddCatalogItem(Product product)
@@ -88,6 +94,42 @@ namespace Data
                     }
                 }
                 dataContext.warehouseState.Add(newEntry);
+            }
+
+            public override bool DoesCatalogItemExist(int id)
+            {
+                foreach(Product product in dataContext.catalog)
+                {
+                    if (product.Id == id)
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            public override bool DoesCustomerExist(int id)
+            {
+                foreach(Customer customer in dataContext.customers)
+                {
+                    if(customer.Id == id)
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            public override bool DoesWarehouseEntryExist(int id)
+            {
+                foreach(WarehouseEntry entry in  dataContext.warehouseState)
+                {
+                    if( entry.Id == id)
+                    {
+                        return true;
+                    }
+                }
+                return false;
             }
 
             public override List<Product> GetAllCatalogItems()
