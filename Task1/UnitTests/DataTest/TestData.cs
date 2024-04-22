@@ -31,6 +31,7 @@ namespace UnitTests
             Assert.AreEqual(emptyDataLayer.GetAllCatalogItems().Count, 0);
             emptyDataLayer.AddCatalogItem(new Product(0, "ERC18", (decimal)999.9));
             Assert.AreEqual(emptyDataLayer.GetAllCatalogItems().Count, 1);
+            Assert.IsTrue(emptyDataLayer.GetCatalogItem(0).Name.Equals("ERC18"));
             Assert.IsTrue(emptyDataLayer.DoesCatalogItemExist(0));
             Assert.IsTrue(emptyDataLayer.RemoveCatalogItem(0));
             Assert.AreEqual(emptyDataLayer.GetAllCatalogItems().Count, 0);

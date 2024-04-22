@@ -7,7 +7,7 @@ using Data;
 
 namespace Logic
 {
-    internal class DataService
+    public class DataService
     {
         private DataLayerAbstract _dataLayer;
         public DataService(DataLayerAbstract dataLayer) 
