@@ -35,7 +35,7 @@ namespace Logic
             _dataLayer.AddSoldEvent(customer, product, quantity);
         }
 
-        public void DeliverProduct(Product product, int quantity)
+        public void DeliverProduct(Supplier supplier, Product product, int quantity)
         {
             if (!_dataLayer.DoesCatalogItemExist(product.Id))
             {
@@ -52,7 +52,7 @@ namespace Logic
                 _dataLayer.AddWarehouseEntry(new WarehouseEntry(product, quantity));
             }
 
-            _dataLayer.AddDeliveryEvent(product, quantity);
+            _dataLayer.AddDeliveryEvent(supplier, product, quantity);
         }
 
     }

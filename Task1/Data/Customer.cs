@@ -6,23 +6,10 @@ using System.Threading.Tasks;
 
 namespace Data
 {
-    public class Customer
+    public class Customer : User
     {
-		private int id;
-		private string name;
+		
 		private List<WarehouseEntry> boughtProducts;
-
-		public string Name
-		{
-			get { return name; }
-			set { name = value; }
-		}
-
-		public int Id
-		{
-			get { return id; }
-			set { id = value; }
-		}
 
 		public List<WarehouseEntry> BoughtProducts
 		{
@@ -43,7 +30,7 @@ namespace Data
 
 			if (obj is Customer customer)
 			{
-				if (customer.Id == this.Id && customer.name.Equals(this.Name)) {
+				if (customer.Id == this.Id && customer.Name.Equals(this.Name)) {
 					return true;
 				}
 				else

@@ -12,6 +12,11 @@ namespace Data
             return new MyDataLayer();
         }
 
+        public static DataLayerAbstract CreateMyDataLayer(DataContext dataContext)
+        {
+            return new MyDataLayer(dataContext);
+        }
+
         #region Customer
         public abstract void AddCustomer(Customer customer);
         public abstract bool DoesCustomerExist(int id);
@@ -19,6 +24,15 @@ namespace Data
         public abstract bool RemoveCustomer(int id);
         public abstract List<Customer> GetAllCustomers();
         #endregion Customer
+
+        #region Supplier
+        public abstract void AddSupplier(Supplier suplier);
+        public abstract bool DoesSupplierExists(int id);
+        public abstract Supplier GetSupplier(int id);
+        public abstract List<Supplier> GetAllSuppliers();
+        public abstract bool RemoveSupplier(int id);
+
+        #endregion
 
         #region State
         public abstract void AddWarehouseEntry(WarehouseEntry entry);
@@ -38,7 +52,7 @@ namespace Data
         #endregion
 
         #region Events
-        public abstract void AddDeliveryEvent(Product deliveredProduct, int quantity);
+        public abstract void AddDeliveryEvent(Supplier supplier, Product deliveredProduct, int quantity);
         public abstract void AddSoldEvent(Customer customer, Product soldProduct, int quantity);
         #endregion
         private class MyDataLayer : DataLayerAbstract
@@ -48,6 +62,11 @@ namespace Data
             public MyDataLayer()
             {
                 dataContext = new DataContext();
+            }
+
+            public MyDataLayer(DataContext dataContext)
+            {
+                this.dataContext = dataContext;
             }
 
             public override void AddCatalogItem(Product product)
@@ -74,14 +93,19 @@ namespace Data
                 dataContext.customers.Add(customer);
             }
 
-            public override void AddDeliveryEvent(Product deliveredProduct, int quantity)
+            public override void AddDeliveryEvent(Supplier supplier, Product deliveredProduct, int quantity)
             {
-                dataContext.events.Add(new EventDelivery(deliveredProduct, quantity));
+                dataContext.events.Add(new EventDelivery(supplier, deliveredProduct, quantity));
             }
 
             public override void AddSoldEvent(Customer customer, Product soldProduct, int quantity)
             {
                 dataContext.events.Add(new EventSold(customer, soldProduct, quantity));
+            }
+
+            public override void AddSupplier(Supplier supplier)
+            {
+                dataContext.suppliers.Add(supplier);
             }
 
             public override void AddWarehouseEntry(WarehouseEntry newEntry)
@@ -120,6 +144,18 @@ namespace Data
                 return false;
             }
 
+            public override bool DoesSupplierExists(int id)
+            {
+                foreach (Supplier supplier in dataContext.suppliers)
+                {
+                    if (supplier.Id == id)
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+
             public override bool DoesWarehouseEntryExist(int id)
             {
                 foreach(WarehouseEntry entry in  dataContext.warehouseState)
@@ -140,6 +176,11 @@ namespace Data
             public override List<Customer> GetAllCustomers()
             {
                 return dataContext.customers;
+            }
+
+            public override List<Supplier> GetAllSuppliers()
+            {
+                return dataContext.suppliers;
             }
 
             public override List<WarehouseEntry> GetAllWarehouseEntries()
@@ -166,6 +207,19 @@ namespace Data
                 if (foundCustomer != null)
                 {
                     return foundCustomer;
+                }
+                else
+                {
+                    throw new Exception("Customer with given ID does not exits.");
+                }
+            }
+
+            public override Supplier GetSupplier(int id)
+            {
+                Supplier? foundSupplier = dataContext.suppliers.Find(p => p.Id == id);
+                if (foundSupplier != null)
+                {
+                    return foundSupplier;
                 }
                 else
                 {
@@ -205,6 +259,18 @@ namespace Data
                     if (customer.Id == id)
                     {
                         return dataContext.customers.Remove(customer);
+                    }
+                }
+                return false;
+            }
+
+            public override bool RemoveSupplier(int id)
+            {
+                foreach (Supplier supplier in dataContext.suppliers)
+                {
+                    if (supplier.Id == id)
+                    {
+                        return dataContext.suppliers.Remove(supplier);
                     }
                 }
                 return false;
