@@ -71,26 +71,43 @@ namespace Data
 
             public override void AddCatalogItem(Product product)
             {
-                foreach(Product catalogItem in GetAllCatalogItems())
+                bool isIdFree = false;
+                while(!isIdFree)
                 {
-                    if(catalogItem.Id == product.Id)
+                    isIdFree = true;
+                    foreach (Product catalogItem in GetAllCatalogItems())
                     {
-                        throw new("Product with given ID already exists.");
+                        if (catalogItem.Id == product.Id)
+                        {
+                            isIdFree = false;
+                            product.Id++;
+                        }
                     }
                 }
+                
                 dataContext.catalog.Add(product);
             }
 
             public override void AddCustomer(Customer customer)
             {
-                foreach (Customer registeredCustomer in GetAllCustomers())
+                bool isIdFree = false;
+                while(!isIdFree)
                 {
-                    if (customer.Id == registeredCustomer.Id)
+                    isIdFree = true;
+                    foreach (Customer registeredCustomer in GetAllCustomers())
                     {
-                        throw new("Customer with given ID already exists.");
+                        if (customer.Id == registeredCustomer.Id)
+                        {
+                            isIdFree = false;
+                            customer.Id++;
+                        }
                     }
                 }
-                dataContext.customers.Add(customer);
+                
+                if(isIdFree)
+                {
+                    dataContext.customers.Add(customer);
+                }
             }
 
             public override void AddDeliveryEvent(Supplier supplier, Product deliveredProduct, int quantity)
@@ -110,14 +127,20 @@ namespace Data
 
             public override void AddWarehouseEntry(WarehouseEntry newEntry)
             {
+                bool doesEntryAlreadyExist = false;
                 foreach(WarehouseEntry entry in GetAllWarehouseEntries())
                 {
                     if(entry.Product == newEntry.Product)
                     {
-                        throw new("Given product already has an entry in warehouse.");
+                        entry.Quantity += newEntry.Quantity;
+                        return;
+                        //throw new("Given product already has an entry in warehouse.");
                     }
                 }
-                dataContext.warehouseState.Add(newEntry);
+                if(!doesEntryAlreadyExist)
+                {
+                    dataContext.warehouseState.Add(newEntry);
+                }
             }
 
             public override bool DoesCatalogItemExist(int id)

@@ -14,15 +14,21 @@ namespace UnitTests
             emptyDataLayer = DataLayerAbstract.CreateMyDataLayer();
 
             IDataGenerator standardGenerator = new StandardDataGenerator();
-            //IDataGenerator randomGenerator = new RandomDataGenerator();
+            IDataGenerator randomGenerator = new RandomDataGenerator();
 
             DataContext standardDataContext = new DataContext(standardGenerator.GenerateCustomers(),
                                                                 standardGenerator.GenerateSuppliers(),
                                                                 standardGenerator.GenerateEvents(),
                                                                 standardGenerator.GenerateProducts(),
                                                                 standardGenerator.GenerateWarehouseEntries());
-
             standardDataLayer = DataLayerAbstract.CreateMyDataLayer(standardDataContext);
+
+            DataContext randomDataContext = new DataContext(randomGenerator.GenerateCustomers(),
+                                                            randomGenerator.GenerateSuppliers(),
+                                                            randomGenerator.GenerateEvents(),
+                                                            randomGenerator.GenerateProducts(),
+                                                            randomGenerator.GenerateWarehouseEntries());
+            randomDataLayer = DataLayerAbstract.CreateMyDataLayer(randomDataContext);
         }
 
         [TestMethod]
@@ -30,11 +36,12 @@ namespace UnitTests
         {
             Assert.AreEqual(emptyDataLayer.GetAllCatalogItems().Count, 0);
             emptyDataLayer.AddCatalogItem(new Product(0, "ERC18", (decimal)999.9));
-            Assert.AreEqual(emptyDataLayer.GetAllCatalogItems().Count, 1);
+            emptyDataLayer.AddCatalogItem(new Product(0, "ERC18", (decimal)999.9));
+            Assert.AreEqual(emptyDataLayer.GetAllCatalogItems().Count, 2);
             Assert.IsTrue(emptyDataLayer.GetCatalogItem(0).Name.Equals("ERC18"));
             Assert.IsTrue(emptyDataLayer.DoesCatalogItemExist(0));
             Assert.IsTrue(emptyDataLayer.RemoveCatalogItem(0));
-            Assert.AreEqual(emptyDataLayer.GetAllCatalogItems().Count, 0);
+            Assert.AreEqual(emptyDataLayer.GetAllCatalogItems().Count, 1);
             Assert.IsFalse(emptyDataLayer.DoesCatalogItemExist(0));
         }
 
@@ -126,6 +133,46 @@ namespace UnitTests
             Assert.IsTrue(emptyDataLayer.RemoveSupplier(1));
             Assert.AreEqual(emptyDataLayer.GetAllSuppliers().Count, 0);
             Assert.IsFalse(emptyDataLayer.DoesSupplierExists(1));
+        }
+
+        [TestMethod]
+        public void TestRandomData_Catalog()
+        {
+            Assert.AreEqual(randomDataLayer.GetAllCatalogItems().Count, 5);
+            int removedProductId = randomDataLayer.GetAllCatalogItems()[0].Id;
+            Assert.IsTrue(randomDataLayer.RemoveCatalogItem(removedProductId));
+            Assert.AreEqual(randomDataLayer.GetAllCatalogItems().Count, 4);
+            Assert.IsFalse(randomDataLayer.DoesCatalogItemExist(removedProductId));
+        }
+
+        [TestMethod]
+        public void TestRandomData_Customers()
+        {
+            Assert.AreEqual(randomDataLayer.GetAllCustomers().Count, 5);
+            int removedCustomerId = randomDataLayer.GetAllCustomers()[0].Id;
+            Assert.IsTrue(randomDataLayer.RemoveCustomer(removedCustomerId));
+            Assert.AreEqual(randomDataLayer.GetAllCustomers().Count, 4);
+            Assert.IsFalse(randomDataLayer.DoesCustomerExist(removedCustomerId));
+        }
+
+        [TestMethod]
+        public void TestRandomData_Suppliers()
+        {
+            Assert.AreEqual(randomDataLayer.GetAllSuppliers().Count, 5);
+            int removedSupplierId = randomDataLayer.GetAllSuppliers()[0].Id;
+            Assert.IsTrue(randomDataLayer.RemoveSupplier(removedSupplierId));
+            Assert.AreEqual(randomDataLayer.GetAllSuppliers().Count, 4);
+            Assert.IsFalse(randomDataLayer.DoesSupplierExists(removedSupplierId));
+        }
+
+        [TestMethod]
+        public void TestRandomData_Warehouse()
+        {
+            Assert.AreEqual(randomDataLayer.GetAllWarehouseEntries().Count, 5);
+            int removedEntryId = randomDataLayer.GetAllWarehouseEntries()[0].Id;
+            Assert.IsTrue(randomDataLayer.RemoveWarehouseEntry(removedEntryId));
+            Assert.AreEqual(randomDataLayer.GetAllWarehouseEntries().Count, 4);
+            Assert.IsFalse(randomDataLayer.DoesWarehouseEntryExist(removedEntryId));
         }
     }
 }
