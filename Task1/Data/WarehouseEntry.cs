@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Data.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Data
 {
-    public class WarehouseEntry
+    internal class WarehouseEntry : IWarehouseEntry
     {
         private Product _product;
         private int _quantity;
@@ -21,6 +22,6 @@ namespace Data
 
         public int Quantity { get => _quantity; set => _quantity = value; }
         public int Id { get => _id; set => _id = value; }
-        internal Product Product { get => _product; set => _product = value; }
+        public IProduct Product { get => _product; set => _product = (Product)value; }
     }
 }

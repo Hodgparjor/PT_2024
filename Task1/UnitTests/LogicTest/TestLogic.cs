@@ -1,6 +1,6 @@
 ﻿using Data;
 using Logic;
-using UnitTests.LogicTest;
+using UnitTests.LogicTest.MockClasses;
 
 namespace UnitTests
 {

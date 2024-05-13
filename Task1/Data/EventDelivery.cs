@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Data
 {
-    public class EventDelivery : Event
+    internal class EventDelivery : Event
     {
         private Supplier _supplier;
         private Product _deliveredProduct;

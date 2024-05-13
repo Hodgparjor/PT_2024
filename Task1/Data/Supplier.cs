@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Data.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Data
 {
-    public class Supplier : User
+    internal class Supplier : User, ISupplier
     {
         private List<WarehouseEntry> suppliedProducts;
         public Supplier(int id, string name) 

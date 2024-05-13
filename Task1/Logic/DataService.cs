@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Data.Interfaces;
 using Data;
 
 namespace Logic
@@ -15,7 +16,7 @@ namespace Logic
             _dataLayer = dataLayer;
         }
 
-        public void SellProduct(Product product, Customer customer, int quantity)
+        public void SellProduct(IProduct product, ICustomer customer, int quantity)
         {
             if(!_dataLayer.DoesWarehouseEntryExist(product.Id) || !_dataLayer.DoesCatalogItemExist(product.Id))
             {

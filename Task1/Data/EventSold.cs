@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Data
 {
-    public class EventSold : Event
+    internal class EventSold : Event
     {
         private Customer _customer;
         private Product _soldProduct;

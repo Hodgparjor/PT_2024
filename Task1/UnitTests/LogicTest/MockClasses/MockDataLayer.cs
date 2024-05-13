@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Data;
 
-namespace UnitTests.LogicTest
+namespace UnitTests.LogicTest.MockClasses
 {
     internal class MockDataLayer : DataLayerAbstract
     {
@@ -15,7 +15,7 @@ namespace UnitTests.LogicTest
         List<Supplier> suppliers;
         public bool deliveryEventCreated = false;
         public bool saleEventCreated = false;
-        public MockDataLayer() 
+        public MockDataLayer()
         {
             products = new List<Product>();
             warehouseEntries = new List<WarehouseEntry>();
