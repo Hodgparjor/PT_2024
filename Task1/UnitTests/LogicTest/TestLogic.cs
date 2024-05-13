@@ -1,5 +1,4 @@
-﻿using Data;
-using Logic;
+﻿using Logic;
 using UnitTests.LogicTest.MockClasses;
 
 namespace UnitTests
@@ -20,8 +19,8 @@ namespace UnitTests
         [TestMethod]
         public void TestDelivery()
         {
-            Product deliveredProduct = new Product(0, "testProduct", (decimal)9.99);
-            Supplier supplier = new Supplier(0, "KOKO");
+            MockProduct deliveredProduct = new MockProduct(0, "testProduct", (decimal)9.99);
+            MockSupplier supplier = new MockSupplier(0, "KOKO");
             mockedDataLayer.AddSupplier(supplier);
             int quantity = 5;
             dataService.DeliverProduct(supplier, deliveredProduct, quantity);
@@ -31,11 +30,12 @@ namespace UnitTests
         [TestMethod]
         public void TestSold()
         {
-            Product soldProduct = new Product(0, "testProduct", (decimal)9.99);
-            Customer customer = new Customer(0, "Martin");
+            MockProduct soldProduct = new MockProduct(0, "testProduct", (decimal)9.99);
+            MockCustomer customer = new MockCustomer(0, "Martin");
             int quantity = 5;
             mockedDataLayer.AddCatalogItem(soldProduct);
             mockedDataLayer.AddCustomer(customer);
+            //TODO Fix that one
             mockedDataLayer.AddWarehouseEntry(new WarehouseEntry(soldProduct, 5));
 
             dataService.SellProduct(soldProduct, customer, quantity);

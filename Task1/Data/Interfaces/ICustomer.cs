@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Data.Interfaces
 {
-    public interface ICustomer
+    public interface ICustomer : IUser
     {
         public List<IWarehouseEntry> BoughtProducts { get; set; }
     }

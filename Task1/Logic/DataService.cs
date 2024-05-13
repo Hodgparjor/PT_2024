@@ -26,7 +26,7 @@ namespace Logic
             {
                 throw new Exception("Customer does not exist.");
             }
-            WarehouseEntry entry = _dataLayer.GetWarehouseEntry(product.Id);
+            IWarehouseEntry entry = _dataLayer.GetWarehouseEntry(product.Id);
             if (entry.Quantity < quantity)
             {
                 throw new Exception("There is insufficent amount of product in the warehouse.");
@@ -36,7 +36,7 @@ namespace Logic
             _dataLayer.AddSoldEvent(customer, product, quantity);
         }
 
-        public void DeliverProduct(Supplier supplier, Product product, int quantity)
+        public void DeliverProduct(ISupplier supplier, IProduct product, int quantity)
         {
             if (!_dataLayer.DoesCatalogItemExist(product.Id))
             {
@@ -45,7 +45,7 @@ namespace Logic
 
             if(_dataLayer.DoesWarehouseEntryExist(product.Id))
             {
-                WarehouseEntry entry = _dataLayer.GetWarehouseEntry(product.Id);
+                IWarehouseEntry entry = _dataLayer.GetWarehouseEntry(product.Id);
                 entry.Quantity += quantity;
             }
             else

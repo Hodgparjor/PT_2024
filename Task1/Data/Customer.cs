@@ -10,9 +10,9 @@ namespace Data
     internal class Customer : User, ICustomer
     {
 		
-		private List<WarehouseEntry> boughtProducts;
+		private List<IWarehouseEntry> boughtProducts;
 
-		public List<WarehouseEntry> BoughtProducts
+		public List<IWarehouseEntry> BoughtProducts
 		{
 			get { return boughtProducts; }
 			set { boughtProducts = value; }
@@ -22,7 +22,7 @@ namespace Data
 		{
 			Id = id;
 			Name = name;
-			boughtProducts = new List<WarehouseEntry>();
+			boughtProducts = new List<IWarehouseEntry>();
 		}
 
         public override bool Equals(Object? obj)

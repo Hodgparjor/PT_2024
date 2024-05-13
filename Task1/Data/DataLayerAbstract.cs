@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Data.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,42 +19,42 @@ namespace Data
         }
 
         #region Customer
-        public abstract void AddCustomer(Customer customer);
+        public abstract void AddCustomer(ICustomer customer);
         public abstract bool DoesCustomerExist(int id);
-        public abstract Customer GetCustomer(int id);
+        public abstract ICustomer GetCustomer(int id);
         public abstract bool RemoveCustomer(int id);
-        public abstract List<Customer> GetAllCustomers();
+        public abstract List<ICustomer> GetAllCustomers();
         #endregion Customer
 
         #region Supplier
-        public abstract void AddSupplier(Supplier suplier);
+        public abstract void AddSupplier(ISupplier suplier);
         public abstract bool DoesSupplierExists(int id);
-        public abstract Supplier GetSupplier(int id);
-        public abstract List<Supplier> GetAllSuppliers();
+        public abstract ISupplier GetSupplier(int id);
+        public abstract List<ISupplier> GetAllSuppliers();
         public abstract bool RemoveSupplier(int id);
 
         #endregion
 
         #region State
-        public abstract void AddWarehouseEntry(WarehouseEntry entry);
+        public abstract void AddWarehouseEntry(IWarehouseEntry entry);
         public abstract bool DoesWarehouseEntryExist(int id);
-        public abstract WarehouseEntry GetWarehouseEntry(int id);
-        public abstract List<WarehouseEntry> GetAllWarehouseEntries();
+        public abstract IWarehouseEntry GetWarehouseEntry(int id);
+        public abstract List<IWarehouseEntry> GetAllWarehouseEntries();
         public abstract bool RemoveWarehouseEntry(int id);
         #endregion
 
         #region Catalog
-        public abstract void AddCatalogItem(Product product);
+        public abstract void AddCatalogItem(IProduct product);
         public abstract bool DoesCatalogItemExist(int id);
         public abstract bool RemoveCatalogItem(int id);
-        public abstract Product GetCatalogItem(int id);
-        public abstract List<Product> GetAllCatalogItems();
+        public abstract IProduct GetCatalogItem(int id);
+        public abstract List<IProduct> GetAllCatalogItems();
 
         #endregion
 
         #region Events
-        public abstract void AddDeliveryEvent(Supplier supplier, Product deliveredProduct, int quantity);
-        public abstract void AddSoldEvent(Customer customer, Product soldProduct, int quantity);
+        public abstract void AddDeliveryEvent(ISupplier supplier, IProduct deliveredProduct, int quantity);
+        public abstract void AddSoldEvent(ICustomer customer, IProduct soldProduct, int quantity);
         #endregion
         private class MyDataLayer : DataLayerAbstract
         {
@@ -69,13 +70,13 @@ namespace Data
                 this.dataContext = dataContext;
             }
 
-            public override void AddCatalogItem(Product product)
+            public override void AddCatalogItem(IProduct product)
             {
                 bool isIdFree = false;
                 while(!isIdFree)
                 {
                     isIdFree = true;
-                    foreach (Product catalogItem in GetAllCatalogItems())
+                    foreach (IProduct catalogItem in GetAllCatalogItems())
                     {
                         if (catalogItem.Id == product.Id)
                         {
@@ -85,10 +86,10 @@ namespace Data
                     }
                 }
                 
-                dataContext.catalog.Add(product);
+                dataContext.catalog.Add((Product)product);
             }
 
-            public override void AddCustomer(Customer customer)
+            public override void AddCustomer(ICustomer customer)
             {
                 bool isIdFree = false;
                 while(!isIdFree)
@@ -106,29 +107,29 @@ namespace Data
                 
                 if(isIdFree)
                 {
-                    dataContext.customers.Add(customer);
+                    dataContext.customers.Add((Customer)customer);
                 }
             }
 
-            public override void AddDeliveryEvent(Supplier supplier, Product deliveredProduct, int quantity)
+            public override void AddDeliveryEvent(ISupplier supplier, IProduct deliveredProduct, int quantity)
             {
-                dataContext.events.Add(new EventDelivery(supplier, deliveredProduct, quantity));
+                dataContext.events.Add(new EventDelivery((Supplier)supplier, (Product)deliveredProduct, quantity));
             }
 
-            public override void AddSoldEvent(Customer customer, Product soldProduct, int quantity)
+            public override void AddSoldEvent(ICustomer customer, IProduct soldProduct, int quantity)
             {
-                dataContext.events.Add(new EventSold(customer, soldProduct, quantity));
+                dataContext.events.Add(new EventSold((Customer)customer, (Product)soldProduct, quantity));
             }
 
-            public override void AddSupplier(Supplier supplier)
+            public override void AddSupplier(ISupplier supplier)
             {
-                dataContext.suppliers.Add(supplier);
+                dataContext.suppliers.Add((Supplier)supplier);
             }
 
-            public override void AddWarehouseEntry(WarehouseEntry newEntry)
+            public override void AddWarehouseEntry(IWarehouseEntry newEntry)
             {
                 bool doesEntryAlreadyExist = false;
-                foreach(WarehouseEntry entry in GetAllWarehouseEntries())
+                foreach(IWarehouseEntry entry in GetAllWarehouseEntries())
                 {
                     if(entry.Product == newEntry.Product)
                     {
@@ -139,13 +140,13 @@ namespace Data
                 }
                 if(!doesEntryAlreadyExist)
                 {
-                    dataContext.warehouseState.Add(newEntry);
+                    dataContext.warehouseState.Add((WarehouseEntry)newEntry);
                 }
             }
 
             public override bool DoesCatalogItemExist(int id)
             {
-                foreach(Product product in dataContext.catalog)
+                foreach(IProduct product in dataContext.catalog)
                 {
                     if (product.Id == id)
                     {
@@ -157,7 +158,7 @@ namespace Data
 
             public override bool DoesCustomerExist(int id)
             {
-                foreach(Customer customer in dataContext.customers)
+                foreach(ICustomer customer in dataContext.customers)
                 {
                     if(customer.Id == id)
                     {
@@ -169,7 +170,7 @@ namespace Data
 
             public override bool DoesSupplierExists(int id)
             {
-                foreach (Supplier supplier in dataContext.suppliers)
+                foreach (ISupplier supplier in dataContext.suppliers)
                 {
                     if (supplier.Id == id)
                     {
@@ -181,7 +182,7 @@ namespace Data
 
             public override bool DoesWarehouseEntryExist(int id)
             {
-                foreach(WarehouseEntry entry in  dataContext.warehouseState)
+                foreach(IWarehouseEntry entry in  dataContext.warehouseState)
                 {
                     if( entry.Id == id)
                     {
@@ -191,27 +192,27 @@ namespace Data
                 return false;
             }
 
-            public override List<Product> GetAllCatalogItems()
+            public override List<IProduct> GetAllCatalogItems()
             {
-                return dataContext.catalog;
+                return dataContext.catalog.ToList<IProduct>();
             }
 
-            public override List<Customer> GetAllCustomers()
+            public override List<ICustomer> GetAllCustomers()
             {
-                return dataContext.customers;
+                return dataContext.customers.ToList<ICustomer>();
             }
 
-            public override List<Supplier> GetAllSuppliers()
+            public override List<ISupplier> GetAllSuppliers()
             {
-                return dataContext.suppliers;
+                return dataContext.suppliers.ToList<ISupplier>();
             }
 
-            public override List<WarehouseEntry> GetAllWarehouseEntries()
+            public override List<IWarehouseEntry> GetAllWarehouseEntries()
             {
-                return dataContext.warehouseState;
+                return dataContext.warehouseState.ToList<IWarehouseEntry>();
             }
 
-            public override Product GetCatalogItem(int id)
+            public override IProduct GetCatalogItem(int id)
             {
                 Product? foundProduct = dataContext.catalog.Find(p => p.Id == id);
                 if(foundProduct != null) 

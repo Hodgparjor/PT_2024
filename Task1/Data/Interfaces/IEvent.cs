@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Data.Interfaces
 {
-    internal interface IEvent
+    public interface IEvent
     {
         public DateTime Date { get; set; }
     }
