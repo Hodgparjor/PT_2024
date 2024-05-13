@@ -35,8 +35,7 @@ namespace UnitTests
             int quantity = 5;
             mockedDataLayer.AddCatalogItem(soldProduct);
             mockedDataLayer.AddCustomer(customer);
-            //TODO Fix that one
-            mockedDataLayer.AddWarehouseEntry(new WarehouseEntry(soldProduct, 5));
+            mockedDataLayer.AddWarehouseEntry(soldProduct, 5);
 
             dataService.SellProduct(soldProduct, customer, quantity);
             Assert.IsTrue(mockedDataLayer.saleEventCreated);

@@ -50,7 +50,7 @@ namespace Logic
             }
             else
             {
-                _dataLayer.AddWarehouseEntry(new WarehouseEntry(product, quantity));
+                _dataLayer.AddWarehouseEntry(product, quantity);
             }
 
             _dataLayer.AddDeliveryEvent(supplier, product, quantity);

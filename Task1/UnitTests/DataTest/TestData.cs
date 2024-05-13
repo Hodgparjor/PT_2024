@@ -62,7 +62,7 @@ namespace UnitTests
         public void TestEmptyData_Warehouse()
         {
             Assert.AreEqual(emptyDataLayer.GetAllWarehouseEntries().Count, 0);
-            emptyDataLayer.AddWarehouseEntry(new WarehouseEntry(new Product(1, "test", (decimal)12.34), 55));
+            emptyDataLayer.AddWarehouseEntry(new Product(1, "test", (decimal)12.34), 55);
             Assert.AreEqual(emptyDataLayer.GetAllWarehouseEntries().Count, 1);
             Assert.IsTrue(emptyDataLayer.GetWarehouseEntry(1).Quantity == 55);
             Assert.IsTrue(emptyDataLayer.DoesWarehouseEntryExist(1));
@@ -113,7 +113,7 @@ namespace UnitTests
         public void TestStandardData_Warehouse()
         {
             Assert.AreEqual(standardDataLayer.GetAllWarehouseEntries().Count, 3);
-            standardDataLayer.AddWarehouseEntry(new WarehouseEntry(new Product(0, "test", (decimal)12.34), 55));
+            standardDataLayer.AddWarehouseEntry(new Product(0, "test", (decimal)12.34), 55);
             Assert.AreEqual(standardDataLayer.GetAllWarehouseEntries().Count, 4);
             Assert.IsTrue(standardDataLayer.GetWarehouseEntry(3).Quantity == 124);
             Assert.IsTrue(standardDataLayer.DoesWarehouseEntryExist(2));

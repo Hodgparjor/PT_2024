@@ -36,7 +36,7 @@ namespace Data
         #endregion
 
         #region State
-        public abstract void AddWarehouseEntry(IWarehouseEntry entry);
+        public abstract void AddWarehouseEntry(IProduct product, int quantity);
         public abstract bool DoesWarehouseEntryExist(int id);
         public abstract IWarehouseEntry GetWarehouseEntry(int id);
         public abstract List<IWarehouseEntry> GetAllWarehouseEntries();
@@ -95,7 +95,7 @@ namespace Data
                 while(!isIdFree)
                 {
                     isIdFree = true;
-                    foreach (Customer registeredCustomer in GetAllCustomers())
+                    foreach (ICustomer registeredCustomer in GetAllCustomers())
                     {
                         if (customer.Id == registeredCustomer.Id)
                         {
@@ -126,8 +126,9 @@ namespace Data
                 dataContext.suppliers.Add((Supplier)supplier);
             }
 
-            public override void AddWarehouseEntry(IWarehouseEntry newEntry)
+            public override void AddWarehouseEntry(IProduct product,  int quantity)
             {
+                WarehouseEntry newEntry = new((Product)product, quantity);
                 bool doesEntryAlreadyExist = false;
                 foreach(IWarehouseEntry entry in GetAllWarehouseEntries())
                 {

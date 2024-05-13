@@ -14,7 +14,7 @@ namespace Data
         internal List<Product> catalog;
         internal List<WarehouseEntry> warehouseState;
 
-        internal DataContext()
+        public DataContext()
         {
             customers = new List<Customer>();
             suppliers = new List<Supplier>();
@@ -23,7 +23,7 @@ namespace Data
             warehouseState = new List<WarehouseEntry>();
         }
 
-        public DataContext(List<Customer> customers, List<Supplier> suppliers, List<Event> events, List<Product> catalog, List<WarehouseEntry> warehouseState)
+        internal DataContext(List<Customer> customers, List<Supplier> suppliers, List<Event> events, List<Product> catalog, List<WarehouseEntry> warehouseState)
         {
             this.customers = customers;
             this.suppliers = suppliers;

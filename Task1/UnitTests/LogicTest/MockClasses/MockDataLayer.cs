@@ -3,58 +3,59 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Data.Interfaces;
 using Data;
 
 namespace UnitTests.LogicTest.MockClasses
 {
     internal class MockDataLayer : DataLayerAbstract
     {
-        List<Product> products;
-        List<WarehouseEntry> warehouseEntries;
-        List<Customer> customers;
-        List<Supplier> suppliers;
+        List<MockProduct> products;
+        List<MockWarehouseEntry> warehouseEntries;
+        List<MockCustomer> customers;
+        List<MockSupplier> suppliers;
         public bool deliveryEventCreated = false;
         public bool saleEventCreated = false;
         public MockDataLayer()
         {
-            products = new List<Product>();
-            warehouseEntries = new List<WarehouseEntry>();
-            customers = new List<Customer>();
-            suppliers = new List<Supplier>();
+            products = new List<MockProduct>();
+            warehouseEntries = new List<MockWarehouseEntry>();
+            customers = new List<MockCustomer>();
+            suppliers = new List<MockSupplier>();
         }
-        public override void AddCatalogItem(Product product)
+        public override void AddCatalogItem(IProduct product)
         {
-            products.Add(product);
+            products.Add((MockProduct)product);
         }
 
-        public override void AddCustomer(Customer customer)
+        public override void AddCustomer(ICustomer customer)
         {
-            customers.Add(customer);
+            customers.Add((MockCustomer)customer);
         }
 
-        public override void AddDeliveryEvent(Supplier supplier, Product deliveredProduct, int quantity)
+        public override void AddDeliveryEvent(ISupplier supplier, IProduct deliveredProduct, int quantity)
         {
             deliveryEventCreated = true;
         }
 
-        public override void AddSoldEvent(Customer customer, Product soldProduct, int quantity)
+        public override void AddSoldEvent(ICustomer customer, IProduct soldProduct, int quantity)
         {
             saleEventCreated = true;
         }
 
-        public override void AddSupplier(Supplier suplier)
+        public override void AddSupplier(ISupplier suplier)
         {
-            suppliers.Add(suplier);
+            suppliers.Add((MockSupplier)suplier);
         }
 
-        public override void AddWarehouseEntry(WarehouseEntry entry)
+        public override void AddWarehouseEntry(IProduct product, int quantity)
         {
-            warehouseEntries.Add(entry);
+            warehouseEntries.Add(new MockWarehouseEntry((MockProduct)product, quantity));
         }
 
         public override bool DoesCatalogItemExist(int id)
         {
-            foreach (Product product in products)
+            foreach (IProduct product in products)
             {
                 if (product.Id == id)
                 {
@@ -66,7 +67,7 @@ namespace UnitTests.LogicTest.MockClasses
 
         public override bool DoesCustomerExist(int id)
         {
-            foreach (Customer customer in customers)
+            foreach (ICustomer customer in customers)
             {
                 if (customer.Id == id)
                 {
@@ -78,7 +79,7 @@ namespace UnitTests.LogicTest.MockClasses
 
         public override bool DoesSupplierExists(int id)
         {
-            foreach (Supplier supplier in suppliers)
+            foreach (ISupplier supplier in suppliers)
             {
                 if (supplier.Id == id)
                 {
@@ -90,7 +91,7 @@ namespace UnitTests.LogicTest.MockClasses
 
         public override bool DoesWarehouseEntryExist(int id)
         {
-            foreach (WarehouseEntry entry in warehouseEntries)
+            foreach (IWarehouseEntry entry in warehouseEntries)
             {
                 if (entry.Id == id)
                 {
@@ -100,29 +101,29 @@ namespace UnitTests.LogicTest.MockClasses
             return false;
         }
 
-        public override List<Product> GetAllCatalogItems()
+        public override List<IProduct> GetAllCatalogItems()
         {
-            return products;
+            return products.ToList<IProduct>();
         }
 
-        public override List<Customer> GetAllCustomers()
+        public override List<ICustomer> GetAllCustomers()
         {
-            return customers;
+            return customers.ToList<ICustomer>();
         }
 
-        public override List<Supplier> GetAllSuppliers()
+        public override List<ISupplier> GetAllSuppliers()
         {
-            return suppliers;
+            return suppliers.ToList<ISupplier>();
         }
 
-        public override List<WarehouseEntry> GetAllWarehouseEntries()
+        public override List<IWarehouseEntry> GetAllWarehouseEntries()
         {
-            return warehouseEntries;
+            return warehouseEntries.ToList<IWarehouseEntry>();
         }
 
-        public override Product GetCatalogItem(int id)
+        public override IProduct GetCatalogItem(int id)
         {
-            Product? foundProduct = products.Find(p => p.Id == id);
+            IProduct? foundProduct = products.Find(p => p.Id == id);
             if (foundProduct != null)
             {
                 return foundProduct;
@@ -133,9 +134,9 @@ namespace UnitTests.LogicTest.MockClasses
             }
         }
 
-        public override Customer GetCustomer(int id)
+        public override ICustomer GetCustomer(int id)
         {
-            Customer? foundCustomer = customers.Find(p => p.Id == id);
+            ICustomer? foundCustomer = customers.Find(p => p.Id == id);
             if (foundCustomer != null)
             {
                 return foundCustomer;
@@ -146,9 +147,9 @@ namespace UnitTests.LogicTest.MockClasses
             }
         }
 
-        public override Supplier GetSupplier(int id)
+        public override ISupplier GetSupplier(int id)
         {
-            Supplier? foundSupplier = suppliers.Find(p => p.Id == id);
+            ISupplier? foundSupplier = suppliers.Find(p => p.Id == id);
             if (foundSupplier != null)
             {
                 return foundSupplier;
@@ -159,9 +160,9 @@ namespace UnitTests.LogicTest.MockClasses
             }
         }
 
-        public override WarehouseEntry GetWarehouseEntry(int id)
+        public override IWarehouseEntry GetWarehouseEntry(int id)
         {
-            WarehouseEntry? foundEntry = warehouseEntries.Find(p => p.Id == id);
+            IWarehouseEntry? foundEntry = warehouseEntries.Find(p => p.Id == id);
             if (foundEntry != null)
             {
                 return foundEntry;
@@ -174,22 +175,22 @@ namespace UnitTests.LogicTest.MockClasses
 
         public override bool RemoveCatalogItem(int id)
         {
-            return products.Remove(GetCatalogItem(id));
+            return products.Remove((MockProduct)GetCatalogItem(id));
         }
 
         public override bool RemoveCustomer(int id)
         {
-            return customers.Remove(GetCustomer(id));
+            return customers.Remove((MockCustomer)GetCustomer(id));
         }
 
         public override bool RemoveSupplier(int id)
         {
-            return suppliers.Remove(GetSupplier(id));
+            return suppliers.Remove((MockSupplier)GetSupplier(id));
         }
 
         public override bool RemoveWarehouseEntry(int id)
         {
-            return warehouseEntries.Remove(GetWarehouseEntry(id));
+            return warehouseEntries.Remove((MockWarehouseEntry)GetWarehouseEntry(id));
         }
     }
 }
