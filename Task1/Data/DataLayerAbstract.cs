@@ -162,6 +162,11 @@ namespace Data
                 throw new NotImplementedException();
             }
 
+            public override Task AddProductAsync(int id, string name, decimal price)
+            {
+                throw new NotImplementedException();
+            }
+
             public override void AddSoldEvent(int customer, int soldProduct, int quantity)
             {
                 dataContext.events.Add(new EventSold((Customer)GetCustomer(customer), (Product)GetCatalogItem(soldProduct), quantity));
@@ -335,6 +340,11 @@ namespace Data
                 throw new NotImplementedException();
             }
 
+            public override Task<int> GetCustomerCountAsync()
+            {
+                throw new NotImplementedException();
+            }
+
             public override Task<IEventSold> GetEventAsync(int id)
             {
                 throw new NotImplementedException();
@@ -450,6 +460,11 @@ namespace Data
             }
 
             public override Task UpdateProductAsync(int id, string name, double price, int pegi)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override Task UpdateProductAsync(int id, string name, decimal price)
             {
                 throw new NotImplementedException();
             }
