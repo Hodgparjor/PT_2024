@@ -13,6 +13,11 @@ namespace Data
             return new MyDataLayer();
         }
 
+        public static DataLayerAbstract CreateDatabase()
+        {
+            throw new NotImplementedException();
+        }
+
         public static DataLayerAbstract CreateMyDataLayer(DataContext dataContext)
         {
             return new MyDataLayer(dataContext);
@@ -24,6 +29,13 @@ namespace Data
         public abstract ICustomer GetCustomer(int id);
         public abstract bool RemoveCustomer(int id);
         public abstract List<ICustomer> GetAllCustomers();
+        public abstract Task AddCustomerAsync(int id, string name);
+        public abstract Task<ICustomer> GetCustomerAsync(int id);
+        public abstract Task<Dictionary<int, ICustomer>> GetAllCustomersAsync();
+        public abstract Task UpdateCustomerAsync(int id, string name);
+        public abstract Task DeleteCustomerAsync(int id);
+        public abstract Task<int> GetCustomerCountAsync();
+
         #endregion Customer
 
         #region Supplier
@@ -41,6 +53,13 @@ namespace Data
         public abstract IWarehouseEntry GetWarehouseEntry(int id);
         public abstract List<IWarehouseEntry> GetAllWarehouseEntries();
         public abstract bool RemoveWarehouseEntry(int id);
+        public abstract Task AddWarehouseEntryAsync(int id, int productId, int quantity);
+        public abstract Task<IWarehouseEntry> GetWarehouseEntryAsync(int id);
+        public abstract Task UpdateWarehouseEntryAsync(int id, int productId, int quantity);
+        public abstract Task DeleteWarehouseEntryAsync(int id);
+        public abstract Task<Dictionary<int, IWarehouseEntry>> GetAllWarehouseEntriesAsync();
+        public abstract Task<int> GetWarehouseEntriesCountAsync();
+
         #endregion
 
         #region Catalog
@@ -49,12 +68,24 @@ namespace Data
         public abstract bool RemoveCatalogItem(int id);
         public abstract IProduct GetCatalogItem(int id);
         public abstract List<IProduct> GetAllCatalogItems();
+        public abstract Task AddProductAsync(int id, string name, decimal price);
+        public abstract Task<IProduct> GetProductAsync(int id);
+        public abstract Task UpdateProductAsync(int id, string name, decimal price);
+        public abstract Task DeleteProductAsync(int id);
+        public abstract Task<Dictionary<int, IProduct>> GetAllProductsAsync();
+        public abstract Task<int> GetProductsCountAsync();
 
         #endregion
 
         #region Events
         public abstract void AddDeliveryEvent(ISupplier supplier, IProduct deliveredProduct, int quantity);
-        public abstract void AddSoldEvent(ICustomer customer, IProduct soldProduct, int quantity);
+        public abstract void AddSoldEvent(int customer, int soldProduct, int quantity);
+        public abstract Task AddEventAsync(int id, int stateId, int userId, int quantity);
+        public abstract Task<IEventSold> GetEventAsync(int id);
+        public abstract Task UpdateEventAsync(int id, int stateId, int userId, DateTime occurenceDate, int quantity);
+        public abstract Task DeleteEventAsync(int id);
+        public abstract Task<Dictionary<int, IEventSold>> GetAllEventsAsync();
+        public abstract Task<int> GetEventsCountAsync();
         #endregion
         private class MyDataLayer : DataLayerAbstract
         {
@@ -111,14 +142,29 @@ namespace Data
                 }
             }
 
+            public override Task AddCustomerAsync(int id, string name)
+            {
+                throw new NotImplementedException();
+            }
+
             public override void AddDeliveryEvent(ISupplier supplier, IProduct deliveredProduct, int quantity)
             {
                 dataContext.events.Add(new EventDelivery((Supplier)supplier, (Product)deliveredProduct, quantity));
             }
 
-            public override void AddSoldEvent(ICustomer customer, IProduct soldProduct, int quantity)
+            public override Task AddEventAsync(int id, int stateId, int userId, int quantity)
             {
-                dataContext.events.Add(new EventSold((Customer)customer, (Product)soldProduct, quantity));
+                throw new NotImplementedException();
+            }
+
+            public override Task AddProductAsync(int id, string name, double price, int pegi)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override void AddSoldEvent(int customer, int soldProduct, int quantity)
+            {
+                dataContext.events.Add(new EventSold((Customer)GetCustomer(customer), (Product)GetCatalogItem(soldProduct), quantity));
             }
 
             public override void AddSupplier(ISupplier supplier)
@@ -143,6 +189,31 @@ namespace Data
                 {
                     dataContext.warehouseState.Add((WarehouseEntry)newEntry);
                 }
+            }
+
+            public override Task AddWarehouseEntryAsync(int id, int productId, int quantity)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override Task DeleteCustomerAsync(int id)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override Task DeleteEventAsync(int id)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override Task DeleteProductAsync(int id)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override Task DeleteWarehouseEntryAsync(int id)
+            {
+                throw new NotImplementedException();
             }
 
             public override bool DoesCatalogItemExist(int id)
@@ -203,6 +274,21 @@ namespace Data
                 return dataContext.customers.ToList<ICustomer>();
             }
 
+            public override Task<Dictionary<int, ICustomer>> GetAllCustomersAsync()
+            {
+                throw new NotImplementedException();
+            }
+
+            public override Task<Dictionary<int, IEventSold>> GetAllEventsAsync()
+            {
+                throw new NotImplementedException();
+            }
+
+            public override Task<Dictionary<int, IProduct>> GetAllProductsAsync()
+            {
+                throw new NotImplementedException();
+            }
+
             public override List<ISupplier> GetAllSuppliers()
             {
                 return dataContext.suppliers.ToList<ISupplier>();
@@ -211,6 +297,11 @@ namespace Data
             public override List<IWarehouseEntry> GetAllWarehouseEntries()
             {
                 return dataContext.warehouseState.ToList<IWarehouseEntry>();
+            }
+
+            public override Task<Dictionary<int, IWarehouseEntry>> GetAllWarehouseEntriesAsync()
+            {
+                throw new NotImplementedException();
             }
 
             public override IProduct GetCatalogItem(int id)
@@ -239,6 +330,31 @@ namespace Data
                 }
             }
 
+            public override Task<ICustomer> GetCustomerAsync(int id)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override Task<IEventSold> GetEventAsync(int id)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override Task<int> GetEventsCountAsync()
+            {
+                throw new NotImplementedException();
+            }
+
+            public override Task<IProduct> GetProductAsync(int id)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override Task<int> GetProductsCountAsync()
+            {
+                throw new NotImplementedException();
+            }
+
             public override Supplier GetSupplier(int id)
             {
                 Supplier? foundSupplier = dataContext.suppliers.Find(p => p.Id == id);
@@ -252,6 +368,11 @@ namespace Data
                 }
             }
 
+            public override Task<int> GetWarehouseEntriesCountAsync()
+            {
+                throw new NotImplementedException();
+            }
+
             public override WarehouseEntry GetWarehouseEntry(int id)
             {
                 WarehouseEntry? foundEntry = dataContext.warehouseState.Find(p => p.Product.Id == id);
@@ -263,6 +384,11 @@ namespace Data
                 {
                     throw new Exception("Product with given ID does not have warehouse entry.");
                 }
+            }
+
+            public override Task<IWarehouseEntry> GetWarehouseEntryAsync(int id)
+            {
+                throw new NotImplementedException();
             }
 
             public override bool RemoveCatalogItem(int id)
@@ -311,6 +437,26 @@ namespace Data
                     }
                 }
                 return false;
+            }
+
+            public override Task UpdateCustomerAsync(int id, string name)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override Task UpdateEventAsync(int id, int stateId, int userId, DateTime occurenceDate, int quantity)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override Task UpdateProductAsync(int id, string name, double price, int pegi)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override Task UpdateWarehouseEntryAsync(int id, int productId, int quantity)
+            {
+                throw new NotImplementedException();
             }
         }
     }

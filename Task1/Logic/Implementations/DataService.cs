@@ -16,24 +16,24 @@ namespace Logic
             _dataLayer = dataLayer;
         }
 
-        public void SellProduct(IProduct product, ICustomer customer, int quantity)
+        public void SellProduct(int productID, int customerID, int quantity)
         {
-            if(!_dataLayer.DoesWarehouseEntryExist(product.Id) || !_dataLayer.DoesCatalogItemExist(product.Id))
+            if(!_dataLayer.DoesWarehouseEntryExist(productID) || !_dataLayer.DoesCatalogItemExist(productID))
             {
                 throw new Exception("Product does not exist.");
             }
-            if(!_dataLayer.DoesCustomerExist(customer.Id))
+            if(!_dataLayer.DoesCustomerExist(customerID))
             {
                 throw new Exception("Customer does not exist.");
             }
-            IWarehouseEntry entry = _dataLayer.GetWarehouseEntry(product.Id);
+            IWarehouseEntry entry = _dataLayer.GetWarehouseEntry(productID);
             if (entry.Quantity < quantity)
             {
                 throw new Exception("There is insufficent amount of product in the warehouse.");
             }
             entry.Quantity -= quantity;
 
-            _dataLayer.AddSoldEvent(customer, product, quantity);
+            _dataLayer.AddSoldEvent(customerID, productID, quantity);
         }
 
         public void DeliverProduct(ISupplier supplier, IProduct product, int quantity)
