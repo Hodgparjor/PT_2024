@@ -8,6 +8,23 @@ namespace Presentation.ViewModel
 {
     internal class MainWindowViewModel : ViewModelBase
     {
-        public MainWindowViewModel() { }
+        private ViewModelBase _selectedViewModel { get; set; }
+
+
+        public MainWindowViewModel()
+        {
+            this._selectedViewModel = new ProductMasterVM();
+        }
+
+        public ViewModelBase SelectedViewModel
+        {
+            get => _selectedViewModel;
+            set
+            {
+                _selectedViewModel = value;
+
+                OnPropertyChanged(nameof(SelectedViewModel));
+            }
+        }
     }
 }

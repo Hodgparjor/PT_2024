@@ -157,11 +157,6 @@ namespace Data
                 throw new NotImplementedException();
             }
 
-            public override Task AddProductAsync(int id, string name, double price, int pegi)
-            {
-                throw new NotImplementedException();
-            }
-
             public override Task AddProductAsync(int id, string name, decimal price)
             {
                 throw new NotImplementedException();
@@ -455,11 +450,6 @@ namespace Data
             }
 
             public override Task UpdateEventAsync(int id, int stateId, int userId, DateTime occurenceDate, int quantity)
-            {
-                throw new NotImplementedException();
-            }
-
-            public override Task UpdateProductAsync(int id, string name, double price, int pegi)
             {
                 throw new NotImplementedException();
             }

@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Presentation
+namespace Presentation.View
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for EventDetailView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class EventDetailView : UserControl
     {
-        public MainWindow()
+        public EventDetailView()
         {
             InitializeComponent();
         }
