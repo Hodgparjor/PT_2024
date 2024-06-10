@@ -10,11 +10,11 @@ using System.Windows;
 
 namespace Presentation.ViewModel
 {
-    internal class ProductMasterVM : ViewModelBase
+    public class ProductMasterVM : ViewModelBase
     {
         public ICommand SwitchToUserMasterPage { get; set; }
 
-        public ICommand SwitchToStateMasterPage { get; set; }
+        public ICommand SwitchToWarehouseEntryMasterPage { get; set; }
 
         public ICommand SwitchToEventMasterPage { get; set; }
 
@@ -104,7 +104,7 @@ namespace Presentation.ViewModel
         public ProductMasterVM(IProductModelHandler? model = null)
         {
             this.SwitchToUserMasterPage = new ChangeViewCommand("UserMasterView");
-            this.SwitchToStateMasterPage = new ChangeViewCommand("WarehouseEntryMasterView");
+            this.SwitchToWarehouseEntryMasterPage = new ChangeViewCommand("WarehouseEntryMasterView");
             this.SwitchToEventMasterPage = new ChangeViewCommand("EventMasterView");
 
             this.CreateProduct = new OnClickCommand(e => this.StoreProduct(), c => this.CanStoreProduct());
@@ -113,6 +113,24 @@ namespace Presentation.ViewModel
             this.Products = new ObservableCollection<ProductDetailVM>();
 
             this._modelHandler = model ?? IProductModelHandler.CreateModelHandler();
+
+            this.IsProductSelected = false;
+
+            Task.Run(this.LoadProducts);
+        }
+
+        public ProductMasterVM()
+        {
+            this.SwitchToUserMasterPage = new ChangeViewCommand("UserMasterView");
+            this.SwitchToWarehouseEntryMasterPage = new ChangeViewCommand("WarehouseEntryMasterView");
+            this.SwitchToEventMasterPage = new ChangeViewCommand("EventMasterView");
+
+            this.CreateProduct = new OnClickCommand(e => this.StoreProduct(), c => this.CanStoreProduct());
+            this.RemoveProduct = new OnClickCommand(e => this.DeleteProduct());
+
+            this.Products = new ObservableCollection<ProductDetailVM>();
+
+            this._modelHandler = IProductModelHandler.CreateModelHandler();
 
             this.IsProductSelected = false;
 

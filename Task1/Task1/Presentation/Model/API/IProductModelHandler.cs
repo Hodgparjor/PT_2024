@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Presentation.Model.API
 {
-    internal interface IProductModelHandler
+    public interface IProductModelHandler
     {
         static IProductModelHandler CreateModelHandler(IProductCRUD? productCrud = null)
         {

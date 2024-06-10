@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace Presentation.ViewModel
 {
-    internal class ProductDetailVM : ViewModelBase
+    public class ProductDetailVM : ViewModelBase
     {
         public ICommand UpdateProduct { get; set; }
 
@@ -50,11 +50,18 @@ namespace Presentation.ViewModel
             }
         }
 
-        public ProductDetailVM(IProductModelHandler? model = null)
+        public ProductDetailVM(IProductModelHandler? model)
         {
             this.UpdateProduct = new OnClickCommand(e => this.Update(), c => this.CanUpdate());
 
             this._modelHandler = model ?? IProductModelHandler.CreateModelHandler();;
+        }
+
+        public ProductDetailVM()
+        {
+            this.UpdateProduct = new OnClickCommand(e => this.Update(), c => this.CanUpdate());
+
+            this._modelHandler = IProductModelHandler.CreateModelHandler(); ;
         }
 
         public ProductDetailVM(int id, string name, decimal price, IProductModelHandler? model = null)

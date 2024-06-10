@@ -1,6 +1,7 @@
 ﻿using Data.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
@@ -163,7 +164,7 @@ namespace Data
             {
                 IProduct product = new Product(id, name, price);
 
-                await this.dataContext.AddProAsync(product);
+                await this.dataContext.AddProductAsync(product);
             }
 
             public override void AddSoldEvent(int customer, int soldProduct, int quantity)
@@ -197,12 +198,20 @@ namespace Data
 
             public async override Task AddWarehouseEntryAsync(int id, int productId, int quantity)
             {
-                throw new NotImplementedException();
+                if (!await dataContext.DoesProductExists(productId))
+                    throw new Exception("This product does not exist!");
+
+                if (quantity < 0)
+                    throw new Exception("Product's quantity must be number greater that 0!");
+
+                IWarehouseEntry warehouseEntry = new WarehouseEntry(id, productId, quantity);
+
+                await dataContext.AddWarehouseEntryAsync(warehouseEntry);
             }
 
             public async override Task DeleteCustomerAsync(int id)
             {
-                if (!await this.CheckIfCustomerExists(id))
+                if (!await dataContext.DoesCustomerExist(id))
                     throw new Exception("This user does not exist");
 
                 await this.dataContext.DeleteCustomerAsync(id);
@@ -210,17 +219,26 @@ namespace Data
 
             public async override Task DeleteEventAsync(int id)
             {
-                throw new NotImplementedException();
+                if (!await dataContext.DoesEventExists(id))
+                    throw new Exception("This event does not exist");
+
+                await dataContext.DeleteEventAsync(id);
             }
 
             public async override Task DeleteProductAsync(int id)
             {
-                throw new NotImplementedException();
+                if (!await dataContext.DoesProductExists(id))
+                    throw new Exception("This product does not exist");
+
+                await dataContext.DeleteProductAsync(id);
             }
 
-            public override Task DeleteWarehouseEntryAsync(int id)
+            public override async Task DeleteWarehouseEntryAsync(int id)
             {
-                throw new NotImplementedException();
+                if (!await dataContext.DoesWarehouseEntryExistsAsync(id))
+                    throw new Exception("This warehouse entry does not exits");
+
+                await dataContext.DeleteWarehouseEntryAsync(id);
             }
 
             public override bool DoesCatalogItemExist(int id)
@@ -281,19 +299,19 @@ namespace Data
                 return dataContext.customers.ToList<ICustomer>();
             }
 
-            public override Task<Dictionary<int, ICustomer>> GetAllCustomersAsync()
+            public override async Task<Dictionary<int, ICustomer>> GetAllCustomersAsync()
             {
-                throw new NotImplementedException();
+                return await this.dataContext.GetAllCustomersAsync();
             }
 
-            public override Task<Dictionary<int, IEventSold>> GetAllEventsAsync()
+            public override async Task<Dictionary<int, IEventSold>> GetAllEventsAsync()
             {
-                throw new NotImplementedException();
+                return await this.dataContext.GetAllEventsAsync();
             }
 
-            public override Task<Dictionary<int, IProduct>> GetAllProductsAsync()
+            public override async Task<Dictionary<int, IProduct>> GetAllProductsAsync()
             {
-                throw new NotImplementedException();
+                return await this.dataContext.GetAllProductsAsync();
             }
 
             public override List<ISupplier> GetAllSuppliers()
@@ -306,9 +324,9 @@ namespace Data
                 return dataContext.warehouseState.ToList<IWarehouseEntry>();
             }
 
-            public override Task<Dictionary<int, IWarehouseEntry>> GetAllWarehouseEntriesAsync()
+            public override async Task<Dictionary<int, IWarehouseEntry>> GetAllWarehouseEntriesAsync()
             {
-                throw new NotImplementedException();
+                return await this.dataContext.GetAllWarehouseEntriesAsync();
             }
 
             public override IProduct GetCatalogItem(int id)
@@ -352,24 +370,34 @@ namespace Data
                 return await this.dataContext.GetCustomersCountAsync();
             }
 
-            public override Task<IEventSold> GetEventAsync(int id)
+            public async override Task<IEventSold> GetEventAsync(int id)
             {
-                throw new NotImplementedException();
+                IEventSold? even = await dataContext.GetEventAsync(id);
+
+                if (even is null)
+                    throw new Exception("This event does not exist!");
+
+                return even;
             }
 
-            public override Task<int> GetEventsCountAsync()
+            public async override Task<int> GetEventsCountAsync()
             {
-                throw new NotImplementedException();
+                return await dataContext.GetEventsCountAsync();
             }
 
-            public override Task<IProduct> GetProductAsync(int id)
+            public async override Task<IProduct> GetProductAsync(int id)
             {
-                throw new NotImplementedException();
+                IProduct? product = await dataContext.GetProductAsync(id);
+
+                if (product is null)
+                    throw new Exception("This product does not exist!");
+
+                return product;
             }
 
-            public override Task<int> GetProductsCountAsync()
+            public override async Task<int> GetProductsCountAsync()
             {
-                throw new NotImplementedException();
+                return await dataContext.GetProductsCountAsync();
             }
 
             public override Supplier GetSupplier(int id)
@@ -385,9 +413,9 @@ namespace Data
                 }
             }
 
-            public override Task<int> GetWarehouseEntriesCountAsync()
+            public override async Task<int> GetWarehouseEntriesCountAsync()
             {
-                throw new NotImplementedException();
+                return await dataContext.GetWarehouseEntriesCountAsync();
             }
 
             public override WarehouseEntry GetWarehouseEntry(int id)
@@ -403,9 +431,14 @@ namespace Data
                 }
             }
 
-            public override Task<IWarehouseEntry> GetWarehouseEntryAsync(int id)
+            public async override Task<IWarehouseEntry> GetWarehouseEntryAsync(int id)
             {
-                throw new NotImplementedException();
+                IWarehouseEntry? warehouseEntry = await dataContext.GetWarehouseEntryAsync(id);
+
+                if (warehouseEntry is null)
+                    throw new Exception("This warehouseEntry does not exist!");
+
+                return warehouseEntry;
             }
 
             public override bool RemoveCatalogItem(int id)
@@ -460,25 +493,40 @@ namespace Data
             {
                 IUser user = new Customer(id, name);
 
-                if (!await this.CheckIfUserExists(user.Id))
+                if (!await dataContext.DoesCustomerExist(user.Id))
                     throw new Exception("This user does not exist");
 
                 await this.dataContext.UpdateCustomerAsync(user);
             }
 
-            public override Task UpdateEventAsync(int id, int stateId, int userId, DateTime occurenceDate, int quantity)
+            public async override Task UpdateEventAsync(int id, int stateId, int userId, DateTime date, int quantity)
             {
-                throw new NotImplementedException();
+                IEventSold newEvent = new EventSold(id, stateId, userId, date, quantity);
+
+                if (!await dataContext.DoesEventExists(newEvent.Id))
+                    throw new Exception("This event does not exist");
+
+                await dataContext.UpdateEventAsync(newEvent);
             }
 
-            public override Task UpdateProductAsync(int id, string name, decimal price)
+            public async override Task UpdateProductAsync(int id, string name, decimal price)
             {
-                throw new NotImplementedException();
+                IProduct product = new Product(id, name, price);
+
+                if (!await dataContext.DoesProductExists(product.Id))
+                    throw new Exception("This product does not exist");
+
+                await dataContext.UpdateProductAsync(product);
             }
 
-            public override Task UpdateWarehouseEntryAsync(int id, int productId, int quantity)
+            public async override Task UpdateWarehouseEntryAsync(int id, int productId, int quantity)
             {
-                throw new NotImplementedException();
+                IWarehouseEntry warehouseEntry = new WarehouseEntry(id, productId, quantity);
+
+                if (!await dataContext.DoesWarehouseEntryExistsAsync(warehouseEntry.Id))
+                    throw new Exception("This warehouse entry does not exist");
+
+                await dataContext.UpdateWarehouseEntryAsync(warehouseEntry);
             }
         }
     }

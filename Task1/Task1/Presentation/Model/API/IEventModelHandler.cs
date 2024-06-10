@@ -8,7 +8,7 @@ using Logic.API.CRUD;
 
 namespace Presentation.Model.API
 {
-    internal interface IEventModelHandler
+    public interface IEventModelHandler
     {
         static IEventModelHandler CreateModelHandler(IEventCRUD? eventCrud = null)
         {

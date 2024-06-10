@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Presentation.Model.API
 {
-    internal interface IProductModel
+    public interface IProductModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
