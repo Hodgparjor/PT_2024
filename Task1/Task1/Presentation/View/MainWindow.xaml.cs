@@ -1,5 +1,4 @@
-﻿using Presentation.ViewModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,14 +15,13 @@ using System.Windows.Shapes;
 namespace Presentation.View
 {
     /// <summary>
-    /// Interaction logic for MainWindowView.xaml
+    /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindowView : Window
+    public partial class MainWindow : Window
     {
-        public MainWindowView()
+        public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = new MainWindowVM();
         }
     }
 }

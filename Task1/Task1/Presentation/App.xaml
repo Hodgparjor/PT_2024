@@ -2,8 +2,33 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Presentation"
-             StartupUri="MainWindow.xaml">
+             xmlns:viewmodels="clr-namespace:Presentation.ViewModel"
+             xmlns:views="clr-namespace:Presentation.View"
+             StartupUri="View/MainWindowView.xaml">
     <Application.Resources>
-         
+        <DataTemplate DataType="{x:Type viewmodels:ProductMasterVM}">
+            <views:ProductMasterView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:ProductDetailVM}">
+            <views:ProductDetailView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:UserDetailVM}">
+            <views:UserDetailView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:UserMasterVM}">
+            <views:UserMasterView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:WarehouseEntryMasterVM}">
+            <views:WarehouseEntryMasterView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:WarehouseEntryDetailVM}">
+            <views:WarehouseEntryDetailView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:EventMasterVM}">
+            <views:EventMasterView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:EventDetailVM}">
+            <views:EventDetailView/>
+        </DataTemplate>
     </Application.Resources>
 </Application>

@@ -10,7 +10,7 @@ namespace Presentation.Model.API
 {
     internal interface IEventModelHandler
     {
-        static IEventModelHandler CreateModelOperation(IEventCRUD? eventCrud = null)
+        static IEventModelHandler CreateModelHandler(IEventCRUD? eventCrud = null)
         {
             return new EventModelHandler(eventCrud ?? IEventCRUD.CreateEventCRUD());
         }

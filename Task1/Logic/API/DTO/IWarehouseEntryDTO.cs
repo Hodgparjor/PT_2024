@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Logic.API.DTO
 {
-    internal interface IWarehouseEntryDTO
+    public interface IWarehouseEntryDTO
     {
         public int Id { get; set; }
         public int productId { get; set; }

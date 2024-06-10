@@ -15,7 +15,7 @@ namespace Data
 
         public static DataLayerAbstract CreateDatabase()
         {
-            throw new NotImplementedException();
+            return new MyDataLayer();
         }
 
         public static DataLayerAbstract CreateMyDataLayer(DataContext dataContext)
@@ -142,9 +142,11 @@ namespace Data
                 }
             }
 
-            public override Task AddCustomerAsync(int id, string name)
+            public async override Task AddCustomerAsync(int id, string name)
             {
-                throw new NotImplementedException();
+                IUser user = new Customer(id, name);
+
+                await this.dataContext.AddCustomerAsync(user);
             }
 
             public override void AddDeliveryEvent(ISupplier supplier, IProduct deliveredProduct, int quantity)
@@ -157,9 +159,11 @@ namespace Data
                 throw new NotImplementedException();
             }
 
-            public override Task AddProductAsync(int id, string name, decimal price)
+            public async override Task AddProductAsync(int id, string name, decimal price)
             {
-                throw new NotImplementedException();
+                IProduct product = new Product(id, name, price);
+
+                await this.dataContext.AddProAsync(product);
             }
 
             public override void AddSoldEvent(int customer, int soldProduct, int quantity)
@@ -191,22 +195,25 @@ namespace Data
                 }
             }
 
-            public override Task AddWarehouseEntryAsync(int id, int productId, int quantity)
+            public async override Task AddWarehouseEntryAsync(int id, int productId, int quantity)
             {
                 throw new NotImplementedException();
             }
 
-            public override Task DeleteCustomerAsync(int id)
+            public async override Task DeleteCustomerAsync(int id)
+            {
+                if (!await this.CheckIfCustomerExists(id))
+                    throw new Exception("This user does not exist");
+
+                await this.dataContext.DeleteCustomerAsync(id);
+            }
+
+            public async override Task DeleteEventAsync(int id)
             {
                 throw new NotImplementedException();
             }
 
-            public override Task DeleteEventAsync(int id)
-            {
-                throw new NotImplementedException();
-            }
-
-            public override Task DeleteProductAsync(int id)
+            public async override Task DeleteProductAsync(int id)
             {
                 throw new NotImplementedException();
             }
@@ -330,14 +337,19 @@ namespace Data
                 }
             }
 
-            public override Task<ICustomer> GetCustomerAsync(int id)
+            public async override Task<ICustomer> GetCustomerAsync(int id)
             {
-                throw new NotImplementedException();
+                IUser? user = await this.dataContext.GetCustomerAsync(id);
+
+                if (user is null)
+                    throw new Exception("This user does not exist!");
+
+                return (ICustomer)user;
             }
 
-            public override Task<int> GetCustomerCountAsync()
+            public async override Task<int> GetCustomerCountAsync()
             {
-                throw new NotImplementedException();
+                return await this.dataContext.GetCustomersCountAsync();
             }
 
             public override Task<IEventSold> GetEventAsync(int id)
@@ -444,9 +456,14 @@ namespace Data
                 return false;
             }
 
-            public override Task UpdateCustomerAsync(int id, string name)
+            public async override Task UpdateCustomerAsync(int id, string name)
             {
-                throw new NotImplementedException();
+                IUser user = new Customer(id, name);
+
+                if (!await this.CheckIfUserExists(user.Id))
+                    throw new Exception("This user does not exist");
+
+                await this.dataContext.UpdateCustomerAsync(user);
             }
 
             public override Task UpdateEventAsync(int id, int stateId, int userId, DateTime occurenceDate, int quantity)

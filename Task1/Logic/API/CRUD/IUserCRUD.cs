@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Logic.API.CRUD
 {
-    internal interface IUserCRUD
+    public interface IUserCRUD
     {
         static IUserCRUD CreateUserCRUD(DataLayerAbstract? dataRepository = null)
         {

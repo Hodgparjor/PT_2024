@@ -18,7 +18,7 @@ namespace Data
         internal List<WarehouseEntry> warehouseState = new();
         private string connectionString;
 
-        public DataContext(string? connectionString)
+        public DataContext(string? connectionString = CONNECTION_STRING)
         {
             this.connectionString = connectionString ?? CONNECTION_STRING;
         }

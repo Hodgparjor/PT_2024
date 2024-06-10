@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Logic.API.CRUD
 {
-    internal interface IProductCRUD
+    public interface IProductCRUD
     {
         static IProductCRUD CreateProductCRUD(DataLayerAbstract? dataRepository = null)
         {
