@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Logic.API.DTO
 {
-    internal interface IEventDTO
+    public interface IEventDTO
     {
         int Id { get; set; }
 

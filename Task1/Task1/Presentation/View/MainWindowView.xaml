@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Presentation.ViewModel"
-        d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}"
+        d:DataContext="{d:DesignInstance Type=local:MainWindowVM}"
         mc:Ignorable="d"
         Title="Task 2" Height="450" Width="800">
     <Grid>

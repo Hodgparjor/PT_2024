@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Presentation.ViewModel
 {
-    internal class MainWindowViewModel : ViewModelBase
+    internal class MainWindowVM : ViewModelBase
     {
         private ViewModelBase _selectedViewModel { get; set; }
 
 
-        public MainWindowViewModel()
+        public MainWindowVM()
         {
             this._selectedViewModel = new ProductMasterVM();
         }

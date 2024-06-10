@@ -9,7 +9,7 @@ using Logic.Implementations.CRUD;
 
 namespace Logic.API.CRUD
 {
-    internal interface IEventCRUD
+    public interface IEventCRUD
     {
         static IEventCRUD CreateEventCRUD(DataLayerAbstract? dataRepository = null)
         {
