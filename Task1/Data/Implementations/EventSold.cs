@@ -35,6 +35,7 @@ namespace Data
             _quantity = quantity;
             _date = date;
             _warehouseEntryId = warehouseEntryId;
+            _productId = warehouseEntryId;
         }
 
         public int Quantity { get => _quantity; set => _quantity = value; }

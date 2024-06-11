@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Data
 {
-    public class DataContext
+    public class DataContext : IDisposable
     {
         //private const string CONNECTION_STRING = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\decyb\\OneDrive\\Pulpit\\Studia\\Sem6\\ProgrammingTechnologies\\PT_2024\\Task1\\Data\\Database\\DatabasePT.mdf;Integrated Security=True";
         internal List<Customer> customers = new();
@@ -182,14 +182,14 @@ namespace Data
 
         #endregion
 
-        #region State CRUD
+        #region WarehouseEntry CRUD
 
         public async Task AddWarehouseEntryAsync(IWarehouseEntry state)
         {
-                Database.WarehouseEntry entity = new Database.WarehouseEntry()
-                {
-                    id = state.Id,
-                    productId = state.Product.Id,
+            Database.WarehouseEntry entity = new Database.WarehouseEntry()
+            {
+                id = state.Id,
+                productId = state.ProductId,
                     quantity = state.Quantity
                 };
 
@@ -324,6 +324,11 @@ namespace Data
         public async Task<bool> DoesEventExists(int id)
         {
             return (await this.GetEventAsync(id)) != null;
+        }
+
+        public void Dispose()
+        {
+            ((IDisposable)context).Dispose();
         }
 
         #endregion

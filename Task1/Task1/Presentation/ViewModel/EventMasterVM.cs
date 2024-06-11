@@ -10,13 +10,13 @@ using System.Windows;
 
 namespace Presentation.ViewModel
 {
-    internal class EventMasterVM : ViewModelBase
+    public class EventMasterVM : ViewModelBase
     {
         public ICommand SwitchToUserMasterPage { get; set; }
 
         public ICommand SwitchToProductMasterPage { get; set; }
 
-        public ICommand SwitchToStateMasterPage { get; set; }
+        public ICommand SwitchToWarehouseEntryMasterPage { get; set; }
 
         public ICommand CreateEvent { get; set; }
 
@@ -116,7 +116,7 @@ namespace Presentation.ViewModel
         public EventMasterVM(IEventModelHandler? model = null)
         {
             this.SwitchToUserMasterPage = new ChangeViewCommand("UserMasterView");
-            this.SwitchToStateMasterPage = new ChangeViewCommand("WarehouseEntryMasterView");
+            this.SwitchToWarehouseEntryMasterPage = new ChangeViewCommand("WarehouseEntryMasterView");
             this.SwitchToProductMasterPage = new ChangeViewCommand("ProductMasterView");
 
             this.CreateEvent = new OnClickCommand(e => this.StoreEvent(), c => this.CanStoreEvent());
@@ -124,7 +124,25 @@ namespace Presentation.ViewModel
 
             this.Events = new ObservableCollection<EventDetailVM>();
 
-            this._modelHandler = IEventModelHandler.CreateModelHandler();
+            this._modelHandler = model ?? IEventModelHandler.CreateModelHandler(null);
+
+            this.IsEventSelected = false;
+
+            Task.Run(this.LoadEvents);
+        }
+
+        public EventMasterVM()
+        {
+            this.SwitchToUserMasterPage = new ChangeViewCommand("UserMasterView");
+            this.SwitchToWarehouseEntryMasterPage = new ChangeViewCommand("WarehouseEntryMasterView");
+            this.SwitchToProductMasterPage = new ChangeViewCommand("ProductMasterView");
+
+            this.CreateEvent = new OnClickCommand(e => this.StoreEvent(), c => this.CanStoreEvent());
+            this.RemoveEvent = new OnClickCommand(e => this.DeleteEvent());
+
+            this.Events = new ObservableCollection<EventDetailVM>();
+
+            this._modelHandler = IEventModelHandler.CreateModelHandler(null);
 
             this.IsEventSelected = false;
 

@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace Presentation.ViewModel
 {
-    internal class UserDetailVM : ViewModelBase
+    public class UserDetailVM : ViewModelBase
     {
         public ICommand UpdateUser { get; set; }
 
@@ -42,7 +42,7 @@ namespace Presentation.ViewModel
         {
             this.UpdateUser = new OnClickCommand(e => this.Update(), c => this.CanUpdate());
 
-            this._modelHandler = model ?? IUserModelHandler.CreateModelHandler();
+            this._modelHandler = model ?? IUserModelHandler.CreateModelHandler(null);
         }
 
         public UserDetailVM(int id, string Name, IUserModelHandler? model = null)
@@ -52,7 +52,7 @@ namespace Presentation.ViewModel
 
             this.UpdateUser = new OnClickCommand(e => this.Update(), c => this.CanUpdate());
 
-            this._modelHandler = model ?? IUserModelHandler.CreateModelHandler();
+            this._modelHandler = model ?? IUserModelHandler.CreateModelHandler(null);
         }
 
         private void Update()

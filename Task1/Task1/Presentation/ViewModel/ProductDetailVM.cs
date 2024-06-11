@@ -54,14 +54,14 @@ namespace Presentation.ViewModel
         {
             this.UpdateProduct = new OnClickCommand(e => this.Update(), c => this.CanUpdate());
 
-            this._modelHandler = model ?? IProductModelHandler.CreateModelHandler();;
+            this._modelHandler = model ?? IProductModelHandler.CreateModelHandler(null);;
         }
 
         public ProductDetailVM()
         {
             this.UpdateProduct = new OnClickCommand(e => this.Update(), c => this.CanUpdate());
 
-            this._modelHandler = IProductModelHandler.CreateModelHandler(); ;
+            this._modelHandler = IProductModelHandler.CreateModelHandler(null); ;
         }
 
         public ProductDetailVM(int id, string name, decimal price, IProductModelHandler? model = null)
@@ -72,7 +72,7 @@ namespace Presentation.ViewModel
 
             this.UpdateProduct = new OnClickCommand(e => this.Update(), c => this.CanUpdate());
 
-            this._modelHandler = model ?? IProductModelHandler.CreateModelHandler();
+            this._modelHandler = model ?? IProductModelHandler.CreateModelHandler(null);
         }
 
         private void Update()

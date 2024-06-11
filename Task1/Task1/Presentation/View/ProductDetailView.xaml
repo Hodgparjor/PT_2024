@@ -11,7 +11,6 @@
         <ObjectDataProvider ObjectType="viewmodels:ProductDetailVM">
             <ObjectDataProvider.ConstructorParameters>
                 <x:Null/>
-                <x:Null/>
             </ObjectDataProvider.ConstructorParameters>
         </ObjectDataProvider>
     </UserControl.DataContext>
@@ -20,13 +19,13 @@
 
         <GroupBox Width="220"
                   HorizontalAlignment="Center"
-                  Header="Information about the product" Margin="0,16,0,0">
+                  Header="Product Detail" Margin="0,0,0,31">
             <StackPanel Margin="0,5,0,0"
                         VerticalAlignment="Top"
                         Background="White">
                 <Label Content="ID:"/>
                 <TextBox Height="20" Width="120" Margin="50,0,10,0"
-                         Text="{Binding Id}"
+                         Text="{Binding Id,UpdateSourceTrigger=PropertyChanged}"
                          TextWrapping="Wrap"
                          BorderBrush="Gray"
                          IsReadOnly="True">
@@ -34,20 +33,20 @@
 
                 <Label Content="Name:"/>
                 <TextBox Height="20" Width="120" Margin="50,0,10,0"
-                         Text="{Binding Name}"
+                         Text="{Binding Name,UpdateSourceTrigger=PropertyChanged}"
                          TextWrapping="Wrap"
                          BorderBrush="Gray">
                 </TextBox>
 
                 <Label Content="Price:"/>
                 <TextBox Height="20" Width="120" Margin="50,0,10,0"
-                         Text="{Binding Price}"
+                         Text="{Binding Price,UpdateSourceTrigger=PropertyChanged}"
                          TextWrapping="Wrap"
                          BorderBrush="Gray">
                 </TextBox>
             </StackPanel>
         </GroupBox>
-        <Button Content="Update" Background="GreenYellow" HorizontalAlignment="Center" Margin="0,236,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.227,0.242" Height="26" Width="90"
+        <Button Content="Update" Background="LightBlue" HorizontalAlignment="Center" Margin="0,246,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.227,0.242" Height="26" Width="90"
             Command="{Binding UpdateProduct}"/>
     </Grid>
 </UserControl>

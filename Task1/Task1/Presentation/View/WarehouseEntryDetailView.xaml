@@ -11,7 +11,6 @@
         <ObjectDataProvider ObjectType="viewmodel:WarehouseEntryDetailVM">
             <ObjectDataProvider.ConstructorParameters>
                 <x:Null/>
-                <x:Null/>
             </ObjectDataProvider.ConstructorParameters>
         </ObjectDataProvider>
     </UserControl.DataContext>
@@ -20,58 +19,34 @@
 
         <GroupBox Width="220"
                   HorizontalAlignment="Center"
-                  Header="Information about the state" Margin="0,16,0,0" Height="220" VerticalAlignment="Top">
+                  Header="Information about the state" Height="193" VerticalAlignment="Top">
             <StackPanel Margin="0,5,0,0"
                         VerticalAlignment="Top"
                         Background="White">
                 <Label Content="ID:"/>
                 <TextBox Height="20" Width="120" Margin="50,0,10,0"
-                         Text="{Binding Id , ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                         Text="{Binding Id ,UpdateSourceTrigger=PropertyChanged}"
                          TextWrapping="Wrap"
                          BorderBrush="Gray" IsReadOnly="True">
-                    <Validation.ErrorTemplate>
-                        <ControlTemplate>
-                            <StackPanel>
-                                <AdornedElementPlaceholder x:Name="placeholder"/>
-                                <TextBlock Text="{Binding [0].ErrorContent}" Foreground="Red"/>
-                            </StackPanel>
-                        </ControlTemplate>
-                    </Validation.ErrorTemplate>
                 </TextBox>
 
                 <Label Content="Product ID:"/>
                 <TextBox Height="20" Width="120" Margin="50,0,10,0"
-                         Text="{Binding ProductId , ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                         Text="{Binding ProductId,UpdateSourceTrigger=PropertyChanged}"
                          TextWrapping="Wrap"
                          BorderBrush="Gray" IsReadOnly="True">
-                    <Validation.ErrorTemplate>
-                        <ControlTemplate>
-                            <StackPanel>
-                                <AdornedElementPlaceholder x:Name="placeholder"/>
-                                <TextBlock Text="{Binding [0].ErrorContent}" Foreground="Red"/>
-                            </StackPanel>
-                        </ControlTemplate>
-                    </Validation.ErrorTemplate>
                 </TextBox>
 
                 <Label Content="Product Quantity:"/>
                 <TextBox Height="20" Width="120" Margin="50,0,10,0"
-                         Text="{Binding ProductQuantity , ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                         Text="{Binding Quantity ,UpdateSourceTrigger=PropertyChanged}"
                          TextWrapping="Wrap"
                          BorderBrush="Gray">
-                    <Validation.ErrorTemplate>
-                        <ControlTemplate>
-                            <StackPanel>
-                                <AdornedElementPlaceholder x:Name="placeholder"/>
-                                <TextBlock Text="{Binding [0].ErrorContent}" Foreground="Red"/>
-                            </StackPanel>
-                        </ControlTemplate>
-                    </Validation.ErrorTemplate>
                 </TextBox>
 
             </StackPanel>
         </GroupBox>
-        <Button Content="Update" Background="GreenYellow" HorizontalAlignment="Center" Margin="0,198,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.227,0.242" Height="26" Width="90"
-            Command="{Binding UpdateState}"/>
+        <Button Content="Update" Background="LightBlue" HorizontalAlignment="Center" Margin="0,198,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.227,0.242" Height="26" Width="90"
+            Command="{Binding UpdateWarehouseEntry}"/>
     </Grid>
 </UserControl>

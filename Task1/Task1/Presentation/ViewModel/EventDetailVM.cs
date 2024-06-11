@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace Presentation.ViewModel
 {
-    internal class EventDetailVM : ViewModelBase
+    public class EventDetailVM : ViewModelBase
     {
         public ICommand UpdateEvent { get; set; }
 
@@ -77,13 +77,13 @@ namespace Presentation.ViewModel
         public EventDetailVM(IEventModelHandler? model = null)
         {
             this.UpdateEvent = new OnClickCommand(e => this.Update(), c => this.CanUpdate());
-            this._modelHandler = IEventModelHandler.CreateModelHandler();
+            this._modelHandler = IEventModelHandler.CreateModelHandler(null);
         }
 
         public EventDetailVM(int id, int warehouseEntryId, int userId, DateTime date, int quantity, IEventModelHandler? model = null)
         {
             this.UpdateEvent = new OnClickCommand(e => this.Update(), c => this.CanUpdate());
-            this._modelHandler = IEventModelHandler.CreateModelHandler();
+            this._modelHandler = IEventModelHandler.CreateModelHandler(null);
 
             this.Id = id;
             this.WarehouseEntryId = warehouseEntryId;

@@ -10,11 +10,11 @@ using System.Windows;
 
 namespace Presentation.ViewModel
 {
-    internal class UserMasterVM : ViewModelBase
+    public class UserMasterVM : ViewModelBase
     {
         public ICommand SwitchToProductMasterPage { get; set; }
 
-        public ICommand SwitchToStateMasterPage { get; set; }
+        public ICommand SwitchToWarehouseEntryMasterPage { get; set; }
 
         public ICommand SwitchToEventMasterPage { get; set; }
 
@@ -91,7 +91,7 @@ namespace Presentation.ViewModel
         public UserMasterVM(IUserModelHandler? model = null)
         {
             this.SwitchToProductMasterPage = new ChangeViewCommand("ProductMasterView");
-            this.SwitchToStateMasterPage = new ChangeViewCommand("WarehouseEntryMasterView");
+            this.SwitchToWarehouseEntryMasterPage = new ChangeViewCommand("WarehouseEntryMasterView");
             this.SwitchToEventMasterPage = new ChangeViewCommand("EventMasterView");
 
             this.CreateUser = new OnClickCommand(e => this.StoreUser(), c => this.CanStoreUser());

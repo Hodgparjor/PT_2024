@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows;
+using System.Diagnostics;
 
 namespace Presentation.ViewModel
 {
@@ -112,7 +113,7 @@ namespace Presentation.ViewModel
 
             this.Products = new ObservableCollection<ProductDetailVM>();
 
-            this._modelHandler = model ?? IProductModelHandler.CreateModelHandler();
+            this._modelHandler = model ?? IProductModelHandler.CreateModelHandler(null);
 
             this.IsProductSelected = false;
 
@@ -130,7 +131,7 @@ namespace Presentation.ViewModel
 
             this.Products = new ObservableCollection<ProductDetailVM>();
 
-            this._modelHandler = IProductModelHandler.CreateModelHandler();
+            this._modelHandler = IProductModelHandler.CreateModelHandler(null);
 
             this.IsProductSelected = false;
 
@@ -170,26 +171,33 @@ namespace Presentation.ViewModel
                 }
                 catch (Exception e)
                 {
-
+                    Debug.WriteLine(e);
                 }
             });
         }
 
         private async void LoadProducts()
         {
-            Dictionary<int, IProductModel> Products = await this._modelHandler.GetAllAsync();
-
-            Application.Current.Dispatcher.Invoke(() =>
+            try
             {
-                this._products.Clear();
+                Dictionary<int, IProductModel> Products = await this._modelHandler.GetAllAsync();
 
-                foreach (IProductModel p in Products.Values)
+                Application.Current.Dispatcher.Invoke(() =>
                 {
-                    this._products.Add(new ProductDetailVM(p.Id, p.Name, p.Price));
-                }
-            });
+                    this._products.Clear();
 
-            OnPropertyChanged(nameof(Products));
+                    foreach (IProductModel p in Products.Values)
+                    {
+                        this._products.Add(new ProductDetailVM(p.Id, p.Name, p.Price));
+                    }
+                });
+
+                OnPropertyChanged(nameof(Products));
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error loading products: {ex.Message}");
+            }
         }
     }
 }

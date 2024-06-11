@@ -8,9 +8,10 @@ using System.Windows.Input;
 
 namespace Presentation.ViewModel
 {
-    internal class WarehouseEntryDetailVM : ViewModelBase
+    public class WarehouseEntryDetailVM : ViewModelBase
     {
-        public ICommand UpdateState { get; set; }
+        public ICommand UpdateWarehouseEntry
+        { get; set; }
 
         private readonly IWarehouseEntryModelHandler _modelHandler;
 
@@ -52,9 +53,9 @@ namespace Presentation.ViewModel
 
         public WarehouseEntryDetailVM(IWarehouseEntryModelHandler? model = null)
         {
-            this.UpdateState = new OnClickCommand(e => this.Update(), c => this.CanUpdate());
+            this.UpdateWarehouseEntry = new OnClickCommand(e => this.Update(), c => this.CanUpdate());
 
-            this._modelHandler = IWarehouseEntryModelHandler.CreateModelHandler();
+            this._modelHandler = IWarehouseEntryModelHandler.CreateModelHandler(null);
         }
 
         public WarehouseEntryDetailVM(int id, int productId, int quantity, IWarehouseEntryModelHandler? model = null)
@@ -63,9 +64,9 @@ namespace Presentation.ViewModel
             this.ProductId = productId;
             this.Quantity = quantity;
 
-            this.UpdateState = new OnClickCommand(e => this.Update(), c => this.CanUpdate());
+            this.UpdateWarehouseEntry = new OnClickCommand(e => this.Update(), c => this.CanUpdate());
 
-            this._modelHandler = IWarehouseEntryModelHandler.CreateModelHandler();
+            this._modelHandler = IWarehouseEntryModelHandler.CreateModelHandler(null);
         }
 
         private void Update()

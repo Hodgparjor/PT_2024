@@ -1,4 +1,5 @@
-﻿using Data.Interfaces;
+﻿using Data.Database;
+using Data.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -155,9 +156,18 @@ namespace Data
                 dataContext.events.Add(new EventDelivery((Supplier)supplier, (Product)deliveredProduct, quantity));
             }
 
-            public override Task AddEventAsync(int id, int stateId, int userId, int quantity)
+            public async override Task AddEventAsync(int id, int stateId, int userId, int quantity)
             {
-                throw new NotImplementedException();
+                IUser user = await this.GetCustomerAsync(userId);
+                IWarehouseEntry warehouseEntry = await this.GetWarehouseEntryAsync(stateId);
+                IEventSold newEvent = new EventSold(id, userId, stateId, DateTime.Now, quantity);
+
+                if (warehouseEntry.Quantity < quantity)
+                    throw new Exception("Product has insufficent quantity");
+
+
+                await this.UpdateWarehouseEntryAsync(stateId, warehouseEntry.ProductId, warehouseEntry.Quantity - quantity);
+                await this.dataContext.AddEventAsync(newEvent);
             }
 
             public async override Task AddProductAsync(int id, string name, decimal price)

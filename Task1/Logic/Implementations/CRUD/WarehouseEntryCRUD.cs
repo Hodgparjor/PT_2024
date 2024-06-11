@@ -22,7 +22,7 @@ namespace Logic.Implementations.CRUD
 
         private IWarehouseEntryDTO WarehouseEntryToDTO(IWarehouseEntry entry)
         {
-            return new WarehouseEntryDTO(entry.Id, entry.Product.Id, entry.Quantity);
+            return new WarehouseEntryDTO(entry.Id, entry.ProductId, entry.Quantity);
         }
 
         public async Task AddWarehouseEntryAsync(int id, int productId, int quantity)

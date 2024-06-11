@@ -12,7 +12,6 @@
         <ObjectDataProvider ObjectType="viewmodels:WarehouseEntryMasterVM">
             <ObjectDataProvider.ConstructorParameters>
                 <x:Null/>
-                <x:Null/>
             </ObjectDataProvider.ConstructorParameters>
         </ObjectDataProvider>
     </UserControl.DataContext>
@@ -20,31 +19,28 @@
     <Grid Background="White" Margin="0,0,0,10">
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="27"/>
-            <RowDefinition Height="375"/>
-            <RowDefinition Height="15"/>
+            <RowDefinition Height="55"/>
+            <RowDefinition Height="395"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="10"/>
-            <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="265*"/>
-            <ColumnDefinition Width="10"/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Row="1" Grid.Column="2" 
-                    Width="570" Margin="0,5,0,0"
-                    HorizontalAlignment="Left"
-                    Background="White" Height="410" VerticalAlignment="Top" Grid.RowSpan="2">
-            <Grid Height="385" Margin="10,5,10,5">
+
+        <StackPanel Grid.Row="1" 
+                    Width="750"
+                    HorizontalAlignment="Center"
+                    Background="White" Height="385" VerticalAlignment="Top">
+            <Grid Height="385" Margin="5">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="202*"/>
-                    <ColumnDefinition Width="73*"/>
+                    <ColumnDefinition Width="400"/>
+                    <ColumnDefinition Width="300"/>
                 </Grid.ColumnDefinitions>
-                <Label Margin="0,0,294,342"
+                <Label Margin="0,0,300,350"
                        HorizontalAlignment="Right"
-                       Content="States" FontSize="15" Width="94"/>
-                <ListView Margin="0,40,95,192" 
-                    ItemsSource="{Binding States, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                       Content="Warehouse Entries" FontSize="15" Width="Auto"/>
+                <ListView Margin="10,35,10,200"  
+                    ItemsSource="{Binding WarehouseEntries, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     SelectedItem="{Binding SelectedDetailViewModel}"
                     >
                     <ListView.View>
@@ -54,13 +50,14 @@
                         </GridView>
                     </ListView.View>
                 </ListView>
-                <Grid Grid.ColumnSpan="2" Visibility="{Binding IsStateDetailVisible}">
+                <Grid Grid.Column="1" Visibility="{Binding IsWarehouseEntryDetailVisible}">
                     <view:WarehouseEntryDetailView
-                        Margin="320,24,10,79"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
                         DataContext="{Binding SelectedDetailViewModel}"
                         />
-                    <Button Content="Delete" Background="IndianRed" HorizontalAlignment="Left" Margin="385,256,0,0" VerticalAlignment="Top" Height="26" Width="90"
-                        Command="{Binding RemoveState}"/>
+                    <Button Content="Delete" Background="IndianRed" HorizontalAlignment="Left" Margin="65,277,0,0" VerticalAlignment="Top" Height="26" Width="90"
+                        Command="{Binding RemoveWarehouseEntry}"/>
                 </Grid>
                 <StackPanel Margin="16,193,202,0"
                     VerticalAlignment="Top"
@@ -80,9 +77,9 @@
                         </Validation.ErrorTemplate>
                     </TextBox>
 
-                    <Label Content="Product Quantity:" FontSize="10"/>
+                    <Label Content="Quantity:" FontSize="10"/>
                     <TextBox Height="20" Width="120" Margin="50,0,10,0"
-                         Text="{Binding ProductQuantity , ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                         Text="{Binding Quantity , ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
                          TextWrapping="Wrap"
                          BorderBrush="Gray">
                         <Validation.ErrorTemplate>
@@ -97,18 +94,19 @@
 
                 </StackPanel>
 
-                <Button Content="Create" Margin="207,308,114,44" Background="CornflowerBlue"
-                        Command="{Binding CreateState}"/>
+
+                <Button Content="Create" Margin="107,288,214,65" Background="CornflowerBlue"
+                        Command="{Binding CreateWarehouseEntry}"/>
             </Grid>
             <Grid Height="100"/>
         </StackPanel>
-        <Button Grid.Column="2" Content="Users" HorizontalAlignment="Left" Margin="352,14,0,0" VerticalAlignment="Top" Width="90" Height="38" Grid.RowSpan="2"
-                Command="{Binding SwitchToUserMasterPage}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=UserControl}}"/>
-
-        <Button Grid.Column="2" Content="Events" HorizontalAlignment="Left" Margin="459,14,0,0" VerticalAlignment="Top" Width="90" Height="38" Grid.RowSpan="2"
+        <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Horizontal">
+            <Button Grid.Column="1" Grid.Row="0" Content="Products" HorizontalAlignment="Left" Margin="10,10,10,0" VerticalAlignment="Top" Width="90" Height="38" Grid.RowSpan="2"
+                Command="{Binding SwitchToProductMasterPage}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+            <Button Grid.Column="1" Grid.Row="0" Content="Events" HorizontalAlignment="Left" Margin="10,10,10,0" VerticalAlignment="Top" Width="90" Height="38" Grid.RowSpan="2"
                 Command="{Binding SwitchToEventMasterPage}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=UserControl}}"/>
-        <Button Grid.Column="2" Content="Products" HorizontalAlignment="Center" Margin="0,14,0,0" VerticalAlignment="Top" Width="90" Height="38" Grid.RowSpan="2"
-            Command="{Binding SwitchToProductMasterPage}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
-
+            <Button Grid.Column="1" Content="Users" HorizontalAlignment="Center" Margin="10,10,10,0" VerticalAlignment="Top" Width="90" Height="38" Grid.RowSpan="2"
+                Command="{Binding SwitchToUserMasterPage}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+        </StackPanel>
     </Grid>
 </UserControl>

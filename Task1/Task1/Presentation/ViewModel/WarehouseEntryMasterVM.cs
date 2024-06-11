@@ -10,7 +10,7 @@ using Presentation.Model.API;
 
 namespace Presentation.ViewModel
 {
-    internal class WarehouseEntryMasterVM : ViewModelBase
+    public class WarehouseEntryMasterVM : ViewModelBase
     {
         public ICommand SwitchToUserMasterPage { get; set; }
 
@@ -123,7 +123,7 @@ namespace Presentation.ViewModel
 
             this.WarehouseEntries = new ObservableCollection<WarehouseEntryDetailVM>();
 
-            this._modelHandler = IWarehouseEntryModelHandler.CreateModelHandler();
+            this._modelHandler = IWarehouseEntryModelHandler.CreateModelHandler(null);
 
             this.IsWarehouseEntrySelected = false;
 
