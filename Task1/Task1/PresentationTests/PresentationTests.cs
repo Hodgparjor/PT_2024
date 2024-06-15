@@ -164,6 +164,63 @@ namespace PresentationTests
             Assert.IsTrue(detail.UpdateEvent.CanExecute(null));
         }
 
+        [TestMethod]
+        public void TestConstantData()
+        {
+            IModelGenerator generator = new ConstantDataGenerator();
+            UserMasterVM userMaster = new UserMasterVM(IUserModelHandler.CreateModelHandler(new MockUserCRUD()));
+            WarehouseEntryMasterVM warehouseEntryMaster = new WarehouseEntryMasterVM(IWarehouseEntryModelHandler.CreateModelHandler(new MockWarehouseEntryCRUD()));
+            ProductMasterVM productMaster = new ProductMasterVM(IProductModelHandler.CreateModelHandler(new MockProductCRUD()));
+            EventMasterVM eventMaster = new EventMasterVM(IEventModelHandler.CreateModelHandler(new MockEventCRUD()));
+
+            generator.GenerateProductModels(productMaster);
+            generator.GenerateUserModels(userMaster);
+            generator.GenerateWarehouseEntryModels(warehouseEntryMaster);
+            generator.GenerateEventModels(eventMaster);
+
+            Assert.AreEqual(4, productMaster.Products.Count);
+            Assert.AreEqual(4, userMaster.Users.Count);
+            Assert.AreEqual(4, warehouseEntryMaster.WarehouseEntries.Count);
+            Assert.AreEqual(4, eventMaster.Events.Count);
+
+            Assert.IsNotNull(userMaster.CreateUser);
+            Assert.IsNotNull(userMaster.RemoveUser);
+            Assert.IsNotNull(productMaster.CreateProduct);
+            Assert.IsNotNull(productMaster.RemoveProduct);
+            Assert.IsNotNull(warehouseEntryMaster.CreateWarehouseEntry);
+            Assert.IsNotNull(warehouseEntryMaster.RemoveWarehouseEntry);
+            Assert.IsNotNull(eventMaster.CreateEvent);
+            Assert.IsNotNull(eventMaster.RemoveEvent);
+        }
+
+        [TestMethod]
+        public void TestRandomData()
+        {
+            IModelGenerator generator = new RandomDataGenerator();
+            UserMasterVM userMaster = new UserMasterVM(IUserModelHandler.CreateModelHandler(new MockUserCRUD()));
+            WarehouseEntryMasterVM warehouseEntryMaster = new WarehouseEntryMasterVM(IWarehouseEntryModelHandler.CreateModelHandler(new MockWarehouseEntryCRUD()));
+            ProductMasterVM productMaster = new ProductMasterVM(IProductModelHandler.CreateModelHandler(new MockProductCRUD()));
+            EventMasterVM eventMaster = new EventMasterVM(IEventModelHandler.CreateModelHandler(new MockEventCRUD()));
+
+            generator.GenerateProductModels(productMaster);
+            generator.GenerateUserModels(userMaster);
+            generator.GenerateWarehouseEntryModels(warehouseEntryMaster);
+            generator.GenerateEventModels(eventMaster);
+
+            Assert.AreEqual(5, productMaster.Products.Count);
+            Assert.AreEqual(5, userMaster.Users.Count);
+            Assert.AreEqual(5, warehouseEntryMaster.WarehouseEntries.Count);
+            Assert.AreEqual(5, eventMaster.Events.Count);
+
+            Assert.IsNotNull(userMaster.CreateUser);
+            Assert.IsNotNull(userMaster.RemoveUser);
+            Assert.IsNotNull(productMaster.CreateProduct);
+            Assert.IsNotNull(productMaster.RemoveProduct);
+            Assert.IsNotNull(warehouseEntryMaster.CreateWarehouseEntry);
+            Assert.IsNotNull(warehouseEntryMaster.RemoveWarehouseEntry);
+            Assert.IsNotNull(eventMaster.CreateEvent);
+            Assert.IsNotNull(eventMaster.RemoveEvent);
+        }
 
 
     }

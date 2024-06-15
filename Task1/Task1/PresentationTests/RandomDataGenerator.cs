@@ -45,10 +45,16 @@ namespace PresentationTests
         public void GenerateUserModels(UserMasterVM vm)
         {
             IUserModelHandler handler = IUserModelHandler.CreateModelHandler(new MockUserCRUD());
+            var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            var stringChars = new char[8];
 
             for (int i = 1; i <= 5; i++)
             {
-
+                for (int j = 0; j < stringChars.Length; j++)
+                {
+                    stringChars[j] = chars[gen.Next(chars.Length)];
+                }
+                vm.Users.Add(new UserDetailVM(i, new string(stringChars), handler));
             }
         }
 
@@ -58,7 +64,7 @@ namespace PresentationTests
 
             for (int i = 1; i <= 5; i++)
             {
-
+                vm.WarehouseEntries.Add(new WarehouseEntryDetailVM(i, i, gen.Next(11, 950), handler));
             }
         }
     }
