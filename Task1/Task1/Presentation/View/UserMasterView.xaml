@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Presentation.View;assembly=Presentation"
              xmlns:view="clr-namespace:Presentation.View"
              xmlns:viewmodels="clr-namespace:Presentation.ViewModel"
-             mc:Ignorable="d" d:DesignWidth="800" Height="480">
+             mc:Ignorable="d" d:DesignWidth="700" Height="480">
 
     <UserControl.DataContext>
         <ObjectDataProvider ObjectType="viewmodels:UserMasterVM">
@@ -27,7 +27,7 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Row="1" 
-                    Width="750"
+                    Width="700"
                     HorizontalAlignment="Center"
                     Background="White" Height="385" VerticalAlignment="Top">
                 <Grid Height="385" Margin="5">

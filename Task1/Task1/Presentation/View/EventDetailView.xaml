@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Presentation.View"
              xmlns:viewmodel="clr-namespace:Presentation.ViewModel"
              mc:Ignorable="d" 
-             Width="220" Height="350">
+             Width="220" Height="282">
     <UserControl.DataContext>
         <ObjectDataProvider ObjectType="viewmodel:EventDetailVM">
             <ObjectDataProvider.ConstructorParameters>
@@ -14,11 +14,11 @@
             </ObjectDataProvider.ConstructorParameters>
         </ObjectDataProvider>
     </UserControl.DataContext>
-    <Grid Background="White" Margin="0,0,0,86">
+    <Grid Background="White">
 
         <GroupBox Width="220"
                   HorizontalAlignment="Center"
-                  Header="Information about the event" Margin="0,0,0,31">
+                  Header="Information about the event" Margin="0,0,0,50">
             <StackPanel Margin="0,5,0,0"
                         VerticalAlignment="Top"
                         Background="White">
@@ -52,7 +52,7 @@
 
             </StackPanel>
         </GroupBox>
-        <Button Content="Update" Background="GreenYellow" HorizontalAlignment="Center" Margin="0,238,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.227,0.242" Height="26" Width="90"
+        <Button Content="Update" Background="LightBlue" HorizontalAlignment="Center" Margin="0,246,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.227,0.242" Height="26" Width="90"
             Command="{Binding UpdateEvent}"/>
     </Grid>
 </UserControl>

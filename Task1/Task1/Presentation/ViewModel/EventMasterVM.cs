@@ -122,7 +122,8 @@ namespace Presentation.ViewModel
             this.CreateEvent = new OnClickCommand(e => this.StoreEvent(), c => this.CanStoreEvent());
             this.RemoveEvent = new OnClickCommand(e => this.DeleteEvent());
 
-            this.Events = new ObservableCollection<EventDetailVM>();
+            this._events = new ObservableCollection<EventDetailVM>();
+            OnPropertyChanged(nameof(Events));
 
             this._modelHandler = model ?? IEventModelHandler.CreateModelHandler(null);
 
@@ -140,7 +141,8 @@ namespace Presentation.ViewModel
             this.CreateEvent = new OnClickCommand(e => this.StoreEvent(), c => this.CanStoreEvent());
             this.RemoveEvent = new OnClickCommand(e => this.DeleteEvent());
 
-            this.Events = new ObservableCollection<EventDetailVM>();
+            this._events = new ObservableCollection<EventDetailVM>();
+            OnPropertyChanged(nameof(Events));
 
             this._modelHandler = IEventModelHandler.CreateModelHandler(null);
 
@@ -183,19 +185,23 @@ namespace Presentation.ViewModel
 
         private async void LoadEvents()
         {
-            Dictionary<int, IEventModel> Events = (await this._modelHandler.GetAllAsync());
-
-            Application.Current.Dispatcher.Invoke(() =>
+            try
             {
-                this._events.Clear();
+                Dictionary<int, IEventModel> Events = (await this._modelHandler.GetAllAsync());
 
-                foreach (IEventModel e in Events.Values)
+                Application.Current.Dispatcher.Invoke(() =>
                 {
-                    this._events.Add(new EventDetailVM(e.Id, e.productId, e.userId, e.date, e.quantity));
-                }
-            });
+                    this._events.Clear();
 
-            OnPropertyChanged(nameof(Events));
+                    foreach (IEventModel e in Events.Values)
+                    {
+                        this._events.Add(new EventDetailVM(e.Id, e.productId, e.userId, e.date, e.quantity));
+                    }
+                });
+
+                OnPropertyChanged(nameof(Events));
+            } catch (Exception ex) { }
+
         }
     }
 }

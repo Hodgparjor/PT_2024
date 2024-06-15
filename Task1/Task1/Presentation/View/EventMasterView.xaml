@@ -6,17 +6,18 @@
              xmlns:local="clr-namespace:Presentation.View;assembly=Presentation"
              xmlns:view="clr-namespace:Presentation.View"
              xmlns:viewmodels="clr-namespace:Presentation.ViewModel"
-             mc:Ignorable="d" d:DesignWidth="800" Height="480">
+             mc:Ignorable="d" d:DesignWidth="700" Height="480">
 
-    <UserControl.DataContext>
-        <ObjectDataProvider ObjectType="viewmodels:EventMasterVM">
+
+    <UserControl.Resources>
+        <ObjectDataProvider ObjectType="{x:Type viewmodels:EventMasterVM}" x:Key="EventMasterVM">
             <ObjectDataProvider.ConstructorParameters>
                 <x:Null/>
             </ObjectDataProvider.ConstructorParameters>
         </ObjectDataProvider>
-    </UserControl.DataContext>
+    </UserControl.Resources>
 
-    <Grid Background="White" Margin="0,0,0,10">
+    <Grid Background="White" Margin="0,0,0,10" DataContext="{StaticResource EventMasterVM}">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="55"/>
@@ -29,7 +30,7 @@
 
 
         <StackPanel Grid.Row="1" 
-                    Width="750"
+                    Width="700"
                     HorizontalAlignment="Center"
                     Background="White" Height="385" VerticalAlignment="Top">
             <Grid Height="385" Margin="5">
@@ -92,8 +93,7 @@
 
                 </StackPanel>
 
-                <Button Content="Create" Margin="107,288,214,65" Background="CornflowerBlue"
-                        Command="{Binding CreateEvent}"/>
+                <Button Content="Create" Margin="200,300,130,55" Background="CornflowerBlue" Command="{Binding CreateEvent}"/>
             </Grid>
             <Grid Height="100"/>
         </StackPanel>

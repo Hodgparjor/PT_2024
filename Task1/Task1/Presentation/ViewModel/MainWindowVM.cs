@@ -16,7 +16,7 @@ namespace Presentation.ViewModel
             this._selectedViewModel = new ProductMasterVM();
         }
 
-        public ViewModelBase SelectedViewModel
+        public new ViewModelBase SelectedViewModel
         {
             get => _selectedViewModel;
             set

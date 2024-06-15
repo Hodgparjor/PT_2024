@@ -7,14 +7,15 @@
              xmlns:view="clr-namespace:Presentation.View"
              xmlns:viewmodels="clr-namespace:Presentation.ViewModel"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <UserControl.DataContext>
-        <ObjectDataProvider ObjectType="viewmodels:WarehouseEntryMasterVM">
+             d:DesignHeight="450" d:DesignWidth="700">
+
+    <UserControl.Resources>
+        <ObjectDataProvider ObjectType="{x:Type viewmodels:WarehouseEntryMasterVM}" x:Key="WarehouseEntryMasterVM">
             <ObjectDataProvider.ConstructorParameters>
                 <x:Null/>
             </ObjectDataProvider.ConstructorParameters>
         </ObjectDataProvider>
-    </UserControl.DataContext>
+    </UserControl.Resources>
 
     <Grid Background="White" Margin="0,0,0,10">
 
@@ -28,7 +29,7 @@
 
 
         <StackPanel Grid.Row="1" 
-                    Width="750"
+                    Width="700"
                     HorizontalAlignment="Center"
                     Background="White" Height="385" VerticalAlignment="Top">
             <Grid Height="385" Margin="5">

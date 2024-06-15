@@ -15,11 +15,11 @@
         </ObjectDataProvider>
     </UserControl.DataContext>
 
-    <Grid Background="White" Margin="0,0,0,10">
+    <Grid Background="White">
 
         <GroupBox Width="220"
                   HorizontalAlignment="Center"
-                  Header="Product Detail" Margin="0,0,0,31">
+                  Header="Product Detail" Margin="0,0,0,100">
             <StackPanel Margin="0,5,0,0"
                         VerticalAlignment="Top"
                         Background="White">

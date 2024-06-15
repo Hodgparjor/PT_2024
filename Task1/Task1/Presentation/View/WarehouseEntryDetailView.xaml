@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Presentation.View"
              xmlns:viewmodel="clr-namespace:Presentation.ViewModel"
              mc:Ignorable="d" 
-             d:DesignHeight="320" d:DesignWidth="220">
+             d:DesignHeight="282" d:DesignWidth="220">
     <UserControl.DataContext>
         <ObjectDataProvider ObjectType="viewmodel:WarehouseEntryDetailVM">
             <ObjectDataProvider.ConstructorParameters>
@@ -15,11 +15,11 @@
         </ObjectDataProvider>
     </UserControl.DataContext>
 
-    <Grid Background="White" Margin="0,0,0,86">
+    <Grid Background="White">
 
         <GroupBox Width="220"
                   HorizontalAlignment="Center"
-                  Header="Information about the state" Height="193" VerticalAlignment="Top">
+                  Header="Information about the state" Height="170" VerticalAlignment="Top">
             <StackPanel Margin="0,5,0,0"
                         VerticalAlignment="Top"
                         Background="White">
@@ -46,7 +46,7 @@
 
             </StackPanel>
         </GroupBox>
-        <Button Content="Update" Background="LightBlue" HorizontalAlignment="Center" Margin="0,198,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.227,0.242" Height="26" Width="90"
+        <Button Content="Update" Background="LightBlue" HorizontalAlignment="Center" Margin="0,246,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.227,0.242" Height="26" Width="90"
             Command="{Binding UpdateWarehouseEntry}"/>
     </Grid>
 </UserControl>

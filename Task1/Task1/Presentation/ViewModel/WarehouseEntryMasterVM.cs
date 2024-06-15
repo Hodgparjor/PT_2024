@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows;
@@ -112,7 +110,7 @@ namespace Presentation.ViewModel
             }
         }
 
-        public WarehouseEntryMasterVM(IWarehouseEntryModelHandler? model = null)
+        public WarehouseEntryMasterVM()
         {
             this.SwitchToUserMasterPage = new ChangeViewCommand("UserMasterView");
             this.SwitchToProductMasterPage = new ChangeViewCommand("ProductMasterView");
@@ -124,6 +122,24 @@ namespace Presentation.ViewModel
             this.WarehouseEntries = new ObservableCollection<WarehouseEntryDetailVM>();
 
             this._modelHandler = IWarehouseEntryModelHandler.CreateModelHandler(null);
+
+            this.IsWarehouseEntrySelected = false;
+
+            Task.Run(this.LoadWarehouseEntries);
+        }
+
+        public WarehouseEntryMasterVM(IWarehouseEntryModelHandler? model = null)
+        {
+            this.SwitchToUserMasterPage = new ChangeViewCommand("UserMasterView");
+            this.SwitchToProductMasterPage = new ChangeViewCommand("ProductMasterView");
+            this.SwitchToEventMasterPage = new ChangeViewCommand("EventMasterView");
+
+            this.CreateWarehouseEntry = new OnClickCommand(e => this.StoreWarehouseEntry(), c => this.CanStoreWarehouseEntry());
+            this.RemoveWarehouseEntry = new OnClickCommand(e => this.DeleteWarehouseEntry());
+
+            this.WarehouseEntries = new ObservableCollection<WarehouseEntryDetailVM>();
+
+            this._modelHandler = model ?? IWarehouseEntryModelHandler.CreateModelHandler(null);
 
             this.IsWarehouseEntrySelected = false;
 

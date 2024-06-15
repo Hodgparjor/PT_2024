@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Presentation.ViewModel"
         d:DataContext="{d:DesignInstance Type=local:MainWindowVM}"
         mc:Ignorable="d"
-        Title="Task 2" Height="450" Width="800">
+        Title="Task 2" Height="450" Width="600">
     <Grid>
         <ContentControl Content="{Binding SelectedViewModel}"/>
     </Grid>
