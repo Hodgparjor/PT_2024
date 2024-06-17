@@ -11,7 +11,7 @@ namespace Presentation.Model.API
     {
         static IWarehouseEntryModelHandler CreateModelHandler(IWarehouseEntryCRUD? stateCrud = null)
         {
-            return new WarehouseEntryModelHandler(stateCrud ?? IWarehouseEntryCRUD.CreateStateCRUD());
+            return new WarehouseEntryModelHandler(stateCrud ?? IWarehouseEntryCRUD.CreateWarehouseEntryCRUD());
         }
 
         Task AddAsync(int id, int productId, int productQuantity);

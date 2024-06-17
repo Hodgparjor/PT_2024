@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Data.Interfaces;
 
-namespace UnitTests.LogicTest.MockClasses
+namespace LogicTest.MockClasses
 {
     internal class MockProduct : IProduct
     {

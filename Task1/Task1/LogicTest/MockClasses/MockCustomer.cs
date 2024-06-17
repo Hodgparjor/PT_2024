@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace UnitTests.LogicTest.MockClasses
+namespace LogicTest.MockClasses
 {
     internal class MockCustomer : MockUser, ICustomer
     {
@@ -19,12 +19,7 @@ namespace UnitTests.LogicTest.MockClasses
             set { boughtProducts = value; }
         }
 
-        public MockCustomer(int id, string name)
-        {
-            Id = id;
-            Name = name;
-            boughtProducts = new List<IWarehouseEntry>();
-        }
+        public MockCustomer(int id, string name) : base(id, name) { }
 
         public override bool Equals(Object? obj)
         {

@@ -15,7 +15,7 @@ namespace Presentation.Model
 
         public WarehouseEntryModelHandler(IWarehouseEntryCRUD? stateCrud = null)
         {
-            this._warehouseEntryCrud = stateCrud ?? IWarehouseEntryCRUD.CreateStateCRUD();
+            this._warehouseEntryCrud = stateCrud ?? IWarehouseEntryCRUD.CreateWarehouseEntryCRUD();
         }
 
         private IWarehouseEntryModel Map(IWarehouseEntryDTO state)

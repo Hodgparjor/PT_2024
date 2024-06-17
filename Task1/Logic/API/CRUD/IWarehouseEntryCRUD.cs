@@ -11,7 +11,7 @@ namespace Logic.API.CRUD
 {
     public interface IWarehouseEntryCRUD
     {
-        static IWarehouseEntryCRUD CreateStateCRUD(DataLayerAbstract? dataRepository = null)
+        static IWarehouseEntryCRUD CreateWarehouseEntryCRUD(DataLayerAbstract? dataRepository = null)
         {
             return new WarehouseEntryCRUD(dataRepository ?? DataLayerAbstract.CreateDatabase());
         }
