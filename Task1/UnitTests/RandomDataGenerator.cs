@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UnitTests.DataTest
+namespace DataTests
 {
     internal class RandomDataGenerator : IDataGenerator
     {
@@ -44,7 +44,7 @@ namespace UnitTests.DataTest
             "MASTERCONTROL"
         };
 
-        public RandomDataGenerator() 
+        public RandomDataGenerator()
         {
             generatedCustomers = GenerateCustomers();
             generatedProducts = GenerateProducts();
@@ -55,7 +55,7 @@ namespace UnitTests.DataTest
 
         public List<Customer> GenerateCustomers()
         {
-            if(generatedCustomers != null)
+            if (generatedCustomers != null)
             {
                 if (generatedCustomers.Count > 0) { return generatedCustomers; }
             }
@@ -69,19 +69,19 @@ namespace UnitTests.DataTest
 
         public List<Event> GenerateEvents()
         {
-            if(generatedEvents != null)
+            if (generatedEvents != null)
             {
-                if(generatedEvents.Count > 0)
+                if (generatedEvents.Count > 0)
                 {
                     return generatedEvents;
                 }
             }
             generatedEvents = new List<Event>();
-            for(int i = 0; i < 2; i++)
+            for (int i = 0; i < 2; i++)
             {
                 generatedEvents.Add(new EventDelivery(generatedSuppliers[i], generatedProducts[i], rnd.Next(40, 100)));
             }
-            for(int i = 0; i < 2; i++)
+            for (int i = 0; i < 2; i++)
             {
                 generatedEvents.Add(new EventSold(generatedCustomers[i], generatedProducts[i], rnd.Next(5, 10)));
             }
@@ -118,12 +118,12 @@ namespace UnitTests.DataTest
 
         public List<WarehouseEntry> GenerateWarehouseEntries()
         {
-            if(generatedWarehouseEntries != null)
+            if (generatedWarehouseEntries != null)
             {
-                if(generatedWarehouseEntries.Count > 0) { return generatedWarehouseEntries; }
+                if (generatedWarehouseEntries.Count > 0) { return generatedWarehouseEntries; }
             }
             generatedWarehouseEntries = new List<WarehouseEntry>();
-            for(int i = 0; i < 5; i++)
+            for (int i = 0; i < 5; i++)
             {
                 generatedWarehouseEntries.Add(new WarehouseEntry(generatedProducts[i], rnd.Next(500)));
             }

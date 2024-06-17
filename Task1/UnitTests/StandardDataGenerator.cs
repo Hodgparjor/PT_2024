@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UnitTests.DataTest
+namespace DataTests
 {
     internal class StandardDataGenerator : IDataGenerator
     {
@@ -26,7 +26,7 @@ namespace UnitTests.DataTest
 
         public List<Customer> GenerateCustomers()
         {
-            if(generatedCustomers == null)
+            if (generatedCustomers == null)
             {
                 generatedCustomers = new List<Customer>
                 {
@@ -36,7 +36,7 @@ namespace UnitTests.DataTest
                     new Customer(4, "Joanna Kowalska")
                 };
             }
-            else if(generatedCustomers.Count == 0)
+            else if (generatedCustomers.Count == 0)
             {
                 generatedCustomers = new List<Customer>
                 {
@@ -46,13 +46,13 @@ namespace UnitTests.DataTest
                     new Customer(4, "Joanna Kowalska")
                 };
             }
-            
+
             return generatedCustomers;
         }
 
         public List<Product> GenerateProducts()
         {
-            if(generatedProducts == null)
+            if (generatedProducts == null)
             {
                 generatedProducts = new List<Product>
                 {
@@ -85,7 +85,7 @@ namespace UnitTests.DataTest
                 new Supplier(4, "Tekeko")
             };
             }
-            else if(generatedSuppliers.Count == 0)
+            else if (generatedSuppliers.Count == 0)
             {
                 generatedSuppliers = new List<Supplier>
             {
@@ -111,7 +111,7 @@ namespace UnitTests.DataTest
                 new WarehouseEntry(generatedProducts[2], 124)
             };
             }
-            else if( generatedWarehouseEntries.Count == 0)
+            else if (generatedWarehouseEntries.Count == 0)
             {
                 generatedWarehouseEntries = new List<WarehouseEntry>
             {
@@ -126,7 +126,7 @@ namespace UnitTests.DataTest
 
         public List<Event> GenerateEvents()
         {
-            if(generatedEvents == null)
+            if (generatedEvents == null)
             {
                 generatedEvents = new List<Event>
             {
@@ -135,7 +135,7 @@ namespace UnitTests.DataTest
                 new EventDelivery(generatedSuppliers[0], generatedProducts[0], 12)
             };
             }
-            else if(generatedEvents.Count == 0)
+            else if (generatedEvents.Count == 0)
             {
                 generatedEvents = new List<Event>
             {
