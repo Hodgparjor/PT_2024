@@ -4,7 +4,6 @@ using Data.Interfaces;
 namespace DataTests
 {
     [TestClass]
-    [DeploymentItem("DatabaseForTests.mdf")]
     public class DataTests
     {
         private static string connectionString;
