@@ -1,10 +1,5 @@
 ﻿using Data.Database;
 using Data.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Data
 {
@@ -324,6 +319,19 @@ namespace Data
         public async Task<bool> DoesEventExists(int id)
         {
             return (await this.GetEventAsync(id)) != null;
+        }
+
+        public async Task ClearTables()
+        {
+            //await Task.Run(() => context.ExecuteCommand("TRUNCATE TABLE Events"));
+            //await Task.Run(() => context.ExecuteCommand("TRUNCATE TABLE WarehouseEntries"));
+            //await Task.Run(() => context.ExecuteCommand("TRUNCATE TABLE Users"));
+            //await Task.Run(() => context.ExecuteCommand("TRUNCATE TABLE Products"));
+
+            await Task.Run(() => context.ExecuteCommand("DELETE FROM Events"));
+            await Task.Run(() => context.ExecuteCommand("DELETE FROM WarehouseEntries"));
+            await Task.Run(() => context.ExecuteCommand("DELETE FROM Users"));
+            await Task.Run(() => context.ExecuteCommand("DELETE FROM Products"));
         }
 
         public void Dispose()

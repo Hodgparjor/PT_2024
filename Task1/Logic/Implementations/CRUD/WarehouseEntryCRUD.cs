@@ -3,11 +3,7 @@ using Data.Interfaces;
 using Logic.API.CRUD;
 using Logic.API.DTO;
 using Logic.Implementations.DTO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Logic.Implementations.CRUD
 {

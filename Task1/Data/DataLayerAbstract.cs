@@ -1,19 +1,10 @@
 ﻿using Data.Database;
 using Data.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
 
 namespace Data
 {
     public abstract class DataLayerAbstract
     {
-        public static DataLayerAbstract CreateMyDataLayer()
-        {
-            return new MyDataLayer();
-        }
 
         public static DataLayerAbstract CreateDatabase()
         {
@@ -62,6 +53,7 @@ namespace Data
         public abstract Task DeleteEventAsync(int id);
         public abstract Task<Dictionary<int, IEventSold>> GetAllEventsAsync();
         public abstract Task<int> GetEventsCountAsync();
+        public abstract Task ClearTables();
         #endregion
         private class MyDataLayer : DataLayerAbstract
         {
@@ -273,12 +265,21 @@ namespace Data
 
             public async override Task UpdateWarehouseEntryAsync(int id, int productId, int quantity)
             {
+                if (quantity < 1) throw new Exception("Quantity can't be less than 1");
+
                 IWarehouseEntry warehouseEntry = new WarehouseEntry(id, productId, quantity);
+
 
                 if (!await dataContext.DoesWarehouseEntryExistsAsync(warehouseEntry.Id))
                     throw new Exception("This warehouse entry does not exist");
 
                 await dataContext.UpdateWarehouseEntryAsync(warehouseEntry);
+            }
+
+
+            public override async Task ClearTables()
+            {
+               await dataContext.ClearTables();
             }
         }
     }

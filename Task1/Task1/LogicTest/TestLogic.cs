@@ -1,5 +1,4 @@
-﻿using Logic;
-using Logic.API.CRUD;
+﻿using Logic.API.CRUD;
 using Logic.API.DTO;
 using LogicTest.MockClasses;
 

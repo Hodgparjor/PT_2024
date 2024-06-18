@@ -1,10 +1,7 @@
-﻿using System;
+﻿using Logic.API.CRUD;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Logic.API;
-using Logic.API.CRUD;
 
 namespace Presentation.Model.API
 {

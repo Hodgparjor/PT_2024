@@ -171,5 +171,10 @@ namespace LogicTest.MockClasses
         }
 
         #endregion
+
+        public override Task ClearTables()
+        {
+            return Task.FromResult(0);
+        }
     }
 }

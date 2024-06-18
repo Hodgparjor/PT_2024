@@ -25,6 +25,7 @@ namespace DataTests
         [TestMethod]
         public async Task UserTests()
         {
+            await _dataLayer.ClearTables();
             int userId = 1;
 
             await _dataLayer.AddCustomerAsync(userId, "test");
@@ -57,7 +58,8 @@ namespace DataTests
         [TestMethod]
         public async Task ProductTests()
         {
-            int productId = 2;
+            await _dataLayer.ClearTables();
+            int productId = 5;
 
             await _dataLayer.AddProductAsync(productId, "ERC505", 125);
 
@@ -87,6 +89,7 @@ namespace DataTests
         [TestMethod]
         public async Task WarehouseEntryTest()
         {
+            await _dataLayer.ClearTables();
             int productId = 3;
             int entryId = 3;
 
@@ -124,10 +127,11 @@ namespace DataTests
         [TestMethod]
         public async Task EventTests()
         {
-            int eventId = 2;
-            int userId = 2;
-            int productId = 2;
-            int entryId = 2;
+            await _dataLayer.ClearTables();
+            int eventId = 6;
+            int userId = 6;
+            int productId = 6;
+            int entryId = 6;
 
             await _dataLayer.AddProductAsync(productId, "ERC505", 100);
             await _dataLayer.AddWarehouseEntryAsync(entryId, productId, 10);
@@ -139,12 +143,13 @@ namespace DataTests
 
             await _dataLayer.AddEventAsync(eventId, entryId, userId, 5);
 
-            IEventSold purchaseEvent = await _dataLayer.GetEventAsync(eventId);
+            IEventSold soldEvent = await _dataLayer.GetEventAsync(eventId);
 
-            Assert.IsNotNull(purchaseEvent);
-            Assert.AreEqual(eventId, purchaseEvent.Id);
-            Assert.AreEqual(entryId, purchaseEvent.WarehouseEntryId);
-            Assert.AreEqual(userId, purchaseEvent.CustomerId);
+            entry = await _dataLayer.GetWarehouseEntryAsync(entryId);
+            Assert.IsNotNull(soldEvent);
+            Assert.AreEqual(eventId, soldEvent.Id);
+            Assert.AreEqual(entryId, soldEvent.WarehouseEntryId);
+            Assert.AreEqual(userId, soldEvent.CustomerId);
             Assert.AreEqual(5, entry.Quantity);
 
             Assert.IsNotNull(await _dataLayer.GetAllEventsAsync());
